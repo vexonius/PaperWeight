@@ -1,15 +1,27 @@
 package io.tstud.paperweight;
 
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import io.tstud.paperweight.Fragments.BrowseFragment;
+import io.tstud.paperweight.Fragments.HomeFragment;
+import io.tstud.paperweight.Fragments.ProgressFragment;
+
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationViewEx  bottomNavigation;
+    private BottomNavigationViewEx bottomNavigation;
+    private TextView mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,17 +33,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setActionBar(){
+    private void setActionBar() {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowCustomEnabled(true);
         ab.setDisplayShowTitleEnabled(false);
         ab.setCustomView(R.layout.actionbar_slick);
 
+        mTitle = (TextView) findViewById(R.id.dash_title);
+
         ab.setElevation(0f);
     }
 
-    private void setBottomNavigation(){
-        bottomNavigation = (BottomNavigationViewEx)findViewById(R.id.bnve);
+    private void setBottomNavigation() {
+        bottomNavigation = (BottomNavigationViewEx) findViewById(R.id.bnve);
 
         // Animations
         bottomNavigation.enableAnimation(false);
@@ -40,6 +54,45 @@ public class MainActivity extends AppCompatActivity {
 
         //Text
         bottomNavigation.setTextVisibility(false);
+
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+                switch (item.getItemId()) {
+
+                    case R.id.home_item:
+                        mTitle.setText("Dashboard");
+                        HomeFragment hf = new HomeFragment();
+                        ft.replace(R.id.frame, hf);
+                        ft.addToBackStack(null);
+                        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                        ft.commit();
+                        break;
+
+                    case R.id.browse_item:
+                        mTitle.setText("Browse");
+                        BrowseFragment bf = new BrowseFragment();
+                        ft.replace(R.id.frame, bf);
+                        ft.addToBackStack(null);
+                        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                        ft.commit();
+                        break;
+
+                    case R.id.progress_item:
+                        mTitle.setText("Progress");
+                        ProgressFragment pf = new ProgressFragment();
+                        ft.replace(R.id.frame, pf);
+                        ft.addToBackStack(null);
+                        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                        ft.commit();
+                        break;
+
+                }
+                return true;
+            }
+        });
     }
 
 }
