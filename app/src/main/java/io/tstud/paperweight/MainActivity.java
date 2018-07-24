@@ -8,20 +8,20 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import io.tstud.paperweight.Fragments.BrowseFragment;
 import io.tstud.paperweight.Fragments.HomeFragment;
+import io.tstud.paperweight.Fragments.ProfileFragment;
 import io.tstud.paperweight.Fragments.ProgressFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationViewEx bottomNavigation;
     private TextView mTitle;
+    private FragmentTransaction ft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         setActionBar();
         setBottomNavigation();
+        setDefaultScreen();
 
     }
 
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft = getSupportFragmentManager().beginTransaction();
 
                 switch (item.getItemId()) {
 
@@ -89,10 +90,26 @@ public class MainActivity extends AppCompatActivity {
                         ft.commit();
                         break;
 
+                    case R.id.profile_item:
+                        mTitle.setText("Profile");
+                        ProfileFragment lf = new ProfileFragment();
+                        ft.replace(R.id.frame, lf);
+                        ft.addToBackStack(null);
+                        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                        ft.commit();
+                        break;
+
                 }
                 return true;
             }
         });
     }
 
+    private void setDefaultScreen(){
+        ft = getSupportFragmentManager().beginTransaction();
+        HomeFragment hf = new HomeFragment();
+        ft.replace(R.id.frame, hf);
+        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        ft.commit();
+    }
 }

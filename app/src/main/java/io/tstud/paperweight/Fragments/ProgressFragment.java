@@ -1,19 +1,27 @@
 package io.tstud.paperweight.Fragments;
 
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import io.tstud.paperweight.R;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProgressFragment extends Fragment {
 
+    private ImageView mCover;
 
     public ProgressFragment() {
         // Required empty public constructor
@@ -24,7 +32,17 @@ public class ProgressFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_progress, container, false);
+        View v = inflater.inflate(R.layout.fragment_progress, container, false);
+
+        mCover = (ImageView)v.findViewById(R.id.progress_cover);
+
+        Glide.with(getActivity())
+                .load(R.drawable.lotr)
+                .apply(RequestOptions.fitCenterTransform())
+                .into(mCover);
+
+
+        return v;
     }
 
 }
