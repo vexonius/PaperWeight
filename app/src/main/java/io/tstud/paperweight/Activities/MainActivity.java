@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import io.tstud.paperweight.Fragments.BrowseFragment;
-import io.tstud.paperweight.Fragments.HomeFragment;
+import io.tstud.paperweight.Home.HomeFragment;
 import io.tstud.paperweight.Fragments.ProfileFragment;
 import io.tstud.paperweight.Fragments.ProgressFragment;
 import io.tstud.paperweight.R;

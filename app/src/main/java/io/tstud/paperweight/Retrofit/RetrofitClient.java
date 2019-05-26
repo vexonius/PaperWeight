@@ -12,7 +12,7 @@ public class RetrofitClient {
     private static final String BASE_URL = "https://www.googleapis.com";
 
 
-    public static Retrofit getRetrofitInstance(){
+    public static Retrofit getInstance(){
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
