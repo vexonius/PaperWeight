@@ -1,7 +1,10 @@
 package io.tstud.paperweight.Fragments;
 
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 
 import io.tstud.paperweight.R;
 
@@ -35,9 +41,15 @@ public class ProgressFragment extends Fragment {
 
         mCover = (ImageView)v.findViewById(R.id.progress_cover);
 
+        DrawableCrossFadeFactory factory =
+                new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
+
         Glide.with(getActivity())
                 .load(R.drawable.lotr)
-                .apply(RequestOptions.fitCenterTransform())
+                .transition(withCrossFade(factory))
+                .centerCrop()
+                .transforms(new RoundedCorners(50))
+                .placeholder(new ColorDrawable(ContextCompat.getColor(getActivity(), R.color.dirty_white)))
                 .into(mCover);
 
 
