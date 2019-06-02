@@ -14,6 +14,9 @@ import io.tstud.paperweight.R;
  */
 public class ProfileFragment extends Fragment {
 
+    public static ProfileFragment newInstance(){
+        return new ProfileFragment();
+    }
 
     public ProfileFragment() {
         // Required empty public constructor

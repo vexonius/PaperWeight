@@ -6,13 +6,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
-import io.tstud.paperweight.Fragments.BrowseFragment;
+import io.tstud.paperweight.Browse.BrowseFragment;
 import io.tstud.paperweight.Home.HomeFragment;
 import io.tstud.paperweight.Fragments.ProfileFragment;
 import io.tstud.paperweight.Fragments.ProgressFragment;
@@ -23,11 +25,14 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationViewEx bottomNavigation;
     private TextView mTitle;
     private FragmentTransaction ft;
+    private MainViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         setActionBar();
         setBottomNavigation();
@@ -66,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.home_item:
                         mTitle.setText("Dashboard");
-                        HomeFragment hf = new HomeFragment();
+                        HomeFragment hf = HomeFragment.newInstance();
                         ft.replace(R.id.frame, hf);
                         ft.addToBackStack(null);
                         ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -75,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.browse_item:
                         mTitle.setText("Browse");
-                        BrowseFragment bf = new BrowseFragment();
+                        BrowseFragment bf = BrowseFragment.newInstance();
                         ft.replace(R.id.frame, bf);
                         ft.addToBackStack(null);
                         ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -84,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.progress_item:
                         mTitle.setText("Progress");
-                        ProgressFragment pf = new ProgressFragment();
+                        ProgressFragment pf = ProgressFragment.newInstance();
                         ft.replace(R.id.frame, pf);
                         ft.addToBackStack(null);
                         ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -93,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.profile_item:
                         mTitle.setText("Profile");
-                        ProfileFragment lf = new ProfileFragment();
+                        ProfileFragment lf = ProfileFragment.newInstance();
                         ft.replace(R.id.frame, lf);
                         ft.addToBackStack(null);
                         ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);

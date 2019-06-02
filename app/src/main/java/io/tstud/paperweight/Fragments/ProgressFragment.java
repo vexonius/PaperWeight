@@ -28,8 +28,12 @@ public class ProgressFragment extends Fragment {
 
     private ImageView mCover;
 
-    public ProgressFragment() {
-        // Required empty public constructor
+    public static ProgressFragment newInstance(){
+        return new ProgressFragment();
+    }
+
+    private ProgressFragment() {
+        // Required empty constructor
     }
 
 
