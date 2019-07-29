@@ -27,6 +27,7 @@ public class BrowseViewModel extends ViewModel {
         searchResults = Transformations.switchMap(query, search -> {
 
             if (search == null || search.trim().length() == 0) {
+                // TODO: create absent livedata
                 return new MutableLiveData<>();
             } else {
                 return repository.getSearchVolumes(search);

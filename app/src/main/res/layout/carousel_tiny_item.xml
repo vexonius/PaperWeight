@@ -38,7 +38,7 @@
         android:textStyle="bold"
         android:layout_marginTop="4dp"
         android:textSize="12dp"
-        android:textColor="#222222"
+        android:textColor="?colorOnBackground"
         android:maxWidth="80dp"
         tools:text="Storm of Swords" />
 

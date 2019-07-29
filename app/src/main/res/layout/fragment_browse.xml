@@ -22,72 +22,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <HorizontalScrollView
-        android:id="@+id/chip_scroll"
-        android:layout_width="match_parent"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chips"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingStart="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchbar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="12dp">
+            android:text="Game of Thrones"
+            app:chipSurfaceColor="#ffffff"
+            app:chipStrokeColor="?colorControlHighlight"
+            app:chipStrokeWidth="2dp"/>
 
-            <TextView
-                android:id="@+id/chip1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/chip"
-                android:text="Blood song"
-                android:textColor="@color/item_color"
-                android:textSize="14dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kingkiller"
+            app:chipSurfaceColor="#ffffff"
+            app:chipStrokeColor="?colorControlHighlight"
+            app:chipStrokeWidth="2dp"/>
 
-            <TextView
-                android:id="@+id/chip2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/chip"
-                android:paddingBottom="6dp"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingTop="6dp"
-                android:text="Song of Ice and Fire"
-                android:textColor="@color/item_color"
-                android:textSize="14dp"
-                app:layout_constraintStart_toEndOf="@+id/chip1"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/chip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/chip"
-                android:paddingBottom="6dp"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingTop="6dp"
-                android:text="The Kingkiller Trilogy"
-                android:textColor="@color/item_color"
-                android:textSize="14dp"
-                app:layout_constraintStart_toEndOf="@+id/chip2"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </HorizontalScrollView>
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The Way of Kings"
+            app:chipSurfaceColor="#ffffff"
+            app:chipStrokeColor="?colorControlHighlight"
+            app:chipStrokeWidth="2dp"/>
+    </com.google.android.material.chip.ChipGroup>
 
     <TextView
         android:id="@+id/categoriesHeader"
@@ -101,7 +72,7 @@
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chip_scroll" />
+        app:layout_constraintTop_toBottomOf="@+id/chips" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoriesRecycler"

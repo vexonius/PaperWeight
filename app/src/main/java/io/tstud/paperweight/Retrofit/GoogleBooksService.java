@@ -1,5 +1,6 @@
 package io.tstud.paperweight.Retrofit;
 
+import io.reactivex.Single;
 import io.tstud.paperweight.Model.Collection;
 import io.tstud.paperweight.Model.Item;
 import retrofit2.Call;
@@ -29,5 +30,9 @@ public interface GoogleBooksService {
     @Headers({"Content-Type: application/json;charset=utf-8", "Accept: application/json"})
     @GET("/books/v1/volumes/{volumeId}")
     Call<Item> getVolumeById(@Path("volumeId") String volumeId);
+
+    @Headers({"Content-Type: application/json;charset=utf-8", "Accept: application/json"})
+    @GET("/books/v1/volumes/{volumeId}")
+    Single<Item> getSingleVolumeById(@Path("volumeId") String volumeId);
 
 }

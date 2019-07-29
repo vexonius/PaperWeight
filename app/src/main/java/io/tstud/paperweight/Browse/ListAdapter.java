@@ -23,50 +23,64 @@ import io.tstud.paperweight.R;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CarouselViewHolder> {
     private List<Item> volumes;
-    private TextView title, author;
-    private ImageView cover;
+
+    private OnBookListener mOnBookListener;
 
 
-    public ListAdapter(List<Item> volumes) {
+    public ListAdapter(List<Item> volumes, OnBookListener onBookListener) {
         this.volumes = volumes;
+        this.mOnBookListener = onBookListener;
     }
 
-    public class CarouselViewHolder extends RecyclerView.ViewHolder {
 
-        public CarouselViewHolder(@NonNull View itemView) {
+    public class CarouselViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
+        private TextView title, author;
+        private ImageView cover;
+        OnBookListener onBookListener;
+
+        public CarouselViewHolder(@NonNull View itemView, OnBookListener onBookListener) {
             super(itemView);
 
-            title = (TextView) itemView.findViewById(R.id.carouselTitle);
-            author = (TextView) itemView.findViewById(R.id.carouselAuthor);
-            cover = (ImageView) itemView.findViewById(R.id.carouselCover);
+            title = (TextView) itemView.findViewById(R.id.listTitle);
+            author = (TextView) itemView.findViewById(R.id.listAuthor);
+            cover = (ImageView) itemView.findViewById(R.id.listCover);
+            this.onBookListener = onBookListener;
+
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            onBookListener.onClick(getAdapterPosition(), cover, volumes.get(getAdapterPosition()));
         }
     }
 
     @Override
     public CarouselViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-        return new CarouselViewHolder(view);
+        return new CarouselViewHolder(view, mOnBookListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CarouselViewHolder holder, int position) {
         Item volume = volumes.get(position);
         if (volume.getVolumeInfo().getTitle() != null)
-            title.setText(volume.getVolumeInfo().getTitle());
+            holder.title.setText(volume.getVolumeInfo().getTitle());
         if (volume.getVolumeInfo().getAuthors() != null)
-            author.setText(volume.getVolumeInfo().getAuthors().get(0));
+            holder.author.setText(volume.getVolumeInfo().getAuthors().get(0));
 
         if (volume.getVolumeInfo().getImageLinks() != null) {
             Glide.with(holder.itemView.getContext())
                     .load(volume.getVolumeInfo().getImageLinks().getSmallThumbnail().replace("&zoom=5&edge=curl", ""))
                     .transforms(new CenterCrop(), new RoundedCorners(50))
                     .placeholder(new ColorDrawable(ContextCompat.getColor(holder.itemView.getContext(), R.color.dirty_white)))
-                    .into(cover);
+                    .into(holder.cover);
         } else {
             Glide.with(holder.itemView.getContext())
                     .load(new ColorDrawable(ContextCompat.getColor(holder.itemView.getContext(), R.color.dirty_white)))
                     .transforms(new CenterCrop(), new RoundedCorners(50))
-                    .into(cover);
+                    .into(holder.cover);
         }
 
     }
@@ -74,6 +88,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CarouselViewHo
     public void updateData(List<Item> list) {
         this.volumes = list;
         notifyDataSetChanged();
+    }
+
+    public interface OnBookListener{
+        void onClick(int position, ImageView view, Item item);
     }
 
     @Override
