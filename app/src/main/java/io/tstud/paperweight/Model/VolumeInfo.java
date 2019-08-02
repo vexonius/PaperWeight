@@ -1,10 +1,13 @@
 
 package io.tstud.paperweight.Model;
 
+import androidx.room.Entity;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "volume_info")
 public class VolumeInfo {
 
     @SerializedName("title")

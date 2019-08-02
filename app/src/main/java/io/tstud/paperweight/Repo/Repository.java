@@ -25,7 +25,7 @@ import retrofit2.Retrofit;
 
 public class Repository {
 
-    private static Repository instance;
+    private static volatile Repository instance;
     private Retrofit apiClient;
     private GoogleBooksService apiService;
     private MutableLiveData<VolumeInfo> bookItem = new MutableLiveData<>();
@@ -41,7 +41,7 @@ public class Repository {
        // getSingleTest();
     }
 
-    public static Repository getInstance(){
+    public static synchronized Repository getInstance(){
         if(instance == null)
             instance = new Repository();
 
@@ -131,5 +131,7 @@ public class Repository {
     public void disposeObservers(){
         disposables.clear();
     }
+
+
 
 }

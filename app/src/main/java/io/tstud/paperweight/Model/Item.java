@@ -1,34 +1,53 @@
 
 package io.tstud.paperweight.Model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "item")
 public class Item {
 
     @SerializedName("kind")
     @Expose
+    @ColumnInfo(name = "kind")
     private String kind;
+
     @SerializedName("id")
     @Expose
+    @PrimaryKey
     private String id;
+
     @SerializedName("etag")
     @Expose
     private String etag;
+
     @SerializedName("selfLink")
     @Expose
     private String selfLink;
+
     @SerializedName("volumeInfo")
     @Expose
+    @Embedded
     private VolumeInfo volumeInfo;
+
     @SerializedName("saleInfo")
     @Expose
+    @Embedded
     private SaleInfo saleInfo;
+
     @SerializedName("accessInfo")
     @Expose
+    @Embedded
     private AccessInfo accessInfo;
+
     @SerializedName("searchInfo")
     @Expose
+    @Embedded
     private SearchInfo searchInfo;
 
     public String getKind() {

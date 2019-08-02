@@ -1,9 +1,13 @@
 
 package io.tstud.paperweight.Model;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "access_info")
 public class AccessInfo {
 
     @SerializedName("country")
@@ -23,9 +27,11 @@ public class AccessInfo {
     private String textToSpeechPermission;
     @SerializedName("epub")
     @Expose
+    @Embedded
     private Epub epub;
     @SerializedName("pdf")
     @Expose
+    @Embedded
     private Pdf pdf;
     @SerializedName("webReaderLink")
     @Expose

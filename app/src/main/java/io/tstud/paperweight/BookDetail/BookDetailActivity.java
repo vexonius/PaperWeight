@@ -3,6 +3,7 @@ package io.tstud.paperweight.BookDetail;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +15,9 @@ import androidx.lifecycle.ViewModelProviders;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import io.tstud.paperweight.Model.DaoModels.BookDaoModel;
 import io.tstud.paperweight.R;
 
 public class BookDetailActivity extends AppCompatActivity {
@@ -24,6 +27,7 @@ public class BookDetailActivity extends AppCompatActivity {
     private ImageView imgView;
     private TextView mTitle, mAuthor, mDescription;
     private DetailViewModel viewModel;
+    private ExtendedFloatingActionButton fab;
 
 
     @Override
@@ -37,6 +41,7 @@ public class BookDetailActivity extends AppCompatActivity {
         mTitle = (TextView) findViewById(R.id.detailTitle);
         mAuthor = (TextView) findViewById(R.id.detailAuthor);
         mDescription = (TextView) findViewById(R.id.bookDescription);
+        fab = (ExtendedFloatingActionButton) findViewById(R.id.addfab);
 
         setUpActionBar();
 
@@ -58,6 +63,13 @@ public class BookDetailActivity extends AppCompatActivity {
             mDescription.setText(volumeInfo.getDescription());
         });
 
+        setFAB();
+
+    }
+
+    public void setFAB() {
+
+        fab.setOnClickListener(view -> viewModel.saveBook(book));
     }
 
     public void setUpActionBar() {
@@ -71,7 +83,7 @@ public class BookDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home){
+        if (id == android.R.id.home) {
             onBackPressed();
             return true;
         }

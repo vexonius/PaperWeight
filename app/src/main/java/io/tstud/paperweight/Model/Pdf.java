@@ -1,9 +1,12 @@
 
 package io.tstud.paperweight.Model;
 
+import androidx.room.Entity;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "pdf")
 public class Pdf {
 
     @SerializedName("isAvailable")

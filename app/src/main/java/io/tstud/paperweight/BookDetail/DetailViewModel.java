@@ -3,6 +3,7 @@ package io.tstud.paperweight.BookDetail;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import io.tstud.paperweight.Model.DaoModels.BookDaoModel;
 import io.tstud.paperweight.Model.VolumeInfo;
 import io.tstud.paperweight.Repo.Repository;
 
@@ -25,5 +26,9 @@ public class DetailViewModel extends ViewModel {
     public LiveData<VolumeInfo> getBookInfo(String bookId){
 
         return bookInfo;
+    }
+
+    public void saveBook(BookDaoModel bookToSave){
+        repo.saveBookToLocal(bookToSave);
     }
 }

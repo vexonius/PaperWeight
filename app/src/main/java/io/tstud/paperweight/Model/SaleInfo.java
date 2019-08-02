@@ -1,10 +1,14 @@
 
 package io.tstud.paperweight.Model;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "sale_info")
 public class SaleInfo {
 
     @SerializedName("country")
@@ -18,9 +22,11 @@ public class SaleInfo {
     private Boolean isEbook;
     @SerializedName("listPrice")
     @Expose
+    @Embedded
     private ListPrice listPrice;
     @SerializedName("retailPrice")
     @Expose
+    @Embedded
     private RetailPrice retailPrice;
     @SerializedName("buyLink")
     @Expose
