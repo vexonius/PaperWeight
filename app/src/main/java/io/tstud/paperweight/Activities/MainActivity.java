@@ -1,25 +1,23 @@
 package io.tstud.paperweight.Activities;
 
 
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import io.tstud.paperweight.Browse.BrowseFragment;
-import io.tstud.paperweight.Home.HomeFragment;
 import io.tstud.paperweight.Fragments.ProfileFragment;
 import io.tstud.paperweight.Fragments.ProgressFragment;
+import io.tstud.paperweight.Home.HomeFragment;
 import io.tstud.paperweight.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationViewEx bottomNavigation;
     private TextView mTitle;
     private FragmentTransaction ft;
-    private MainViewModel mViewModel;
+    MainViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

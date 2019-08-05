@@ -1,13 +1,13 @@
 
-package io.tstud.paperweight.Model;
+package io.tstud.paperweight.Model.Models;
 
 import androidx.room.Entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "pdf")
-public class Pdf {
+@Entity(tableName = "epub")
+public class Epub {
 
     @SerializedName("isAvailable")
     @Expose

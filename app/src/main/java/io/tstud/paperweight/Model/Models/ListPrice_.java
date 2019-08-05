@@ -1,27 +1,27 @@
 
-package io.tstud.paperweight.Model;
+package io.tstud.paperweight.Model.Models;
 
 import androidx.room.Entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "retail_price")
-public class RetailPrice {
+@Entity(tableName = "list_price_")
+public class ListPrice_ {
 
-    @SerializedName("amount")
+    @SerializedName("amountInMicros")
     @Expose
-    private Double amount;
+    private Double amountInMicros;
     @SerializedName("currencyCode")
     @Expose
     private String currencyCode;
 
-    public Double getAmount() {
-        return amount;
+    public Double getAmountInMicros() {
+        return amountInMicros;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setAmountInMicros(Double amountInMicros) {
+        this.amountInMicros = amountInMicros;
     }
 
     public String getCurrencyCode() {

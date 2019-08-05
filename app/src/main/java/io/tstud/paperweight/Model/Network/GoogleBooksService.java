@@ -1,8 +1,8 @@
-package io.tstud.paperweight.Retrofit;
+package io.tstud.paperweight.Model.Network;
 
 import io.reactivex.Single;
-import io.tstud.paperweight.Model.Collection;
-import io.tstud.paperweight.Model.Item;
+import io.tstud.paperweight.Model.Models.Collection;
+import io.tstud.paperweight.Model.Models.Item;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;

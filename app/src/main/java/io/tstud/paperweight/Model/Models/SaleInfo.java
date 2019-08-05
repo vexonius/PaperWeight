@@ -1,19 +1,23 @@
 
-package io.tstud.paperweight.Model;
+package io.tstud.paperweight.Model.Models;
 
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.TypeConverters;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+import io.tstud.paperweight.Model.Local.CustomTypeConverters;
 
 @Entity(tableName = "sale_info")
 public class SaleInfo {
 
     @SerializedName("country")
     @Expose
-    private String country;
+    private String countryOfSale;
     @SerializedName("saleability")
     @Expose
     private String saleability;
@@ -33,14 +37,15 @@ public class SaleInfo {
     private String buyLink;
     @SerializedName("offers")
     @Expose
+    @TypeConverters(CustomTypeConverters.class)
     private List<Offer> offers = null;
 
-    public String getCountry() {
-        return country;
+    public String getCountryOfSale() {
+        return countryOfSale;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountryOfSale(String country) {
+        this.countryOfSale = country;
     }
 
     public String getSaleability() {

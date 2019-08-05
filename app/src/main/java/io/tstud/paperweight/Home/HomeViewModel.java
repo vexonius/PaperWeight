@@ -1,16 +1,13 @@
 package io.tstud.paperweight.Home;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import io.tstud.paperweight.Model.Collection;
-import io.tstud.paperweight.Model.VolumeInfo;
-import io.tstud.paperweight.Repo.Repository;
+import io.tstud.paperweight.Model.Models.Collection;
+import io.tstud.paperweight.Model.Models.VolumeInfo;
+import io.tstud.paperweight.Model.Repository;
 
 
 public class HomeViewModel extends ViewModel {
@@ -22,7 +19,7 @@ public class HomeViewModel extends ViewModel {
     private Repository repository;
 
     public HomeViewModel() {
-        super();
+
         repository = Repository.getInstance();
         collection = repository.getTrendingList();
     }
@@ -35,7 +32,7 @@ public class HomeViewModel extends ViewModel {
         return collection;
     }
 
-    public void updateData(){
+    public void updateData() {
         collection = repository.getTrendingList();
     }
 

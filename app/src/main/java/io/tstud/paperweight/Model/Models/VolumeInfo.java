@@ -1,14 +1,27 @@
 
-package io.tstud.paperweight.Model;
+package io.tstud.paperweight.Model.Models;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
+import io.tstud.paperweight.Model.Local.CustomTypeConverters;
+
 @Entity(tableName = "volume_info")
 public class VolumeInfo {
+
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "volume_id")
+    private long id;
 
     @SerializedName("title")
     @Expose
@@ -18,7 +31,8 @@ public class VolumeInfo {
     private String subtitle;
     @SerializedName("authors")
     @Expose
-    private List<String> authors = null;
+    @TypeConverters(CustomTypeConverters.class)
+    private List<String> authors;
     @SerializedName("publisher")
     @Expose
     private String publisher;
@@ -30,9 +44,11 @@ public class VolumeInfo {
     private String description;
     @SerializedName("industryIdentifiers")
     @Expose
+    @TypeConverters(CustomTypeConverters.class)
     private List<IndustryIdentifier> industryIdentifiers = null;
     @SerializedName("readingModes")
     @Expose
+    @Embedded
     private ReadingModes readingModes;
     @SerializedName("pageCount")
     @Expose
@@ -42,6 +58,7 @@ public class VolumeInfo {
     private String printType;
     @SerializedName("categories")
     @Expose
+    @TypeConverters(CustomTypeConverters.class)
     private List<String> categories = null;
     @SerializedName("averageRating")
     @Expose
@@ -60,9 +77,11 @@ public class VolumeInfo {
     private String contentVersion;
     @SerializedName("panelizationSummary")
     @Expose
+    @Embedded
     private PanelizationSummary panelizationSummary;
     @SerializedName("imageLinks")
     @Expose
+    @Embedded
     private ImageLinks imageLinks;
     @SerializedName("language")
     @Expose
@@ -81,6 +100,7 @@ public class VolumeInfo {
     private Boolean comicsContent;
     @SerializedName("seriesInfo")
     @Expose
+    @Embedded
     private SeriesInfo seriesInfo;
 
     public String getTitle() {
@@ -275,4 +295,15 @@ public class VolumeInfo {
         this.seriesInfo = seriesInfo;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getCleanDescription(){
+        return android.text.Html.fromHtml(this.description).toString();
+    }
 }

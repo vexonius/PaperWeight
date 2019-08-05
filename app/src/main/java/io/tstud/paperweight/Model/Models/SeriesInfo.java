@@ -1,11 +1,15 @@
 
-package io.tstud.paperweight.Model;
+package io.tstud.paperweight.Model.Models;
 
 import androidx.room.Entity;
+import androidx.room.TypeConverters;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+import io.tstud.paperweight.Model.Local.CustomTypeConverters;
 
 @Entity(tableName = "series_info")
 public class SeriesInfo {
@@ -21,6 +25,7 @@ public class SeriesInfo {
     private String bookDisplayNumber;
     @SerializedName("volumeSeries")
     @Expose
+    @TypeConverters(CustomTypeConverters.class)
     private List<VolumeSeries> volumeSeries = null;
 
     public String getKind() {

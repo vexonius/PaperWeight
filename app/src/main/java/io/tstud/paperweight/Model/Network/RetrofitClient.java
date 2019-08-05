@@ -1,4 +1,4 @@
-package io.tstud.paperweight.Retrofit;
+package io.tstud.paperweight.Model.Network;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

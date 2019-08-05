@@ -1,5 +1,5 @@
 
-package io.tstud.paperweight.Model;
+package io.tstud.paperweight.Model.Models;
 
 import androidx.room.Embedded;
 import androidx.room.Entity;

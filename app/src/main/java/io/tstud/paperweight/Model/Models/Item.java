@@ -1,6 +1,7 @@
 
-package io.tstud.paperweight.Model;
+package io.tstud.paperweight.Model.Models;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
@@ -14,12 +15,13 @@ public class Item {
 
     @SerializedName("kind")
     @Expose
-    @ColumnInfo(name = "kind")
+    @ColumnInfo(name = "item_kind")
     private String kind;
 
     @SerializedName("id")
     @Expose
     @PrimaryKey
+    @NonNull
     private String id;
 
     @SerializedName("etag")

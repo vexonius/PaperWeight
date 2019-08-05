@@ -22,7 +22,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 
-import io.tstud.paperweight.Model.Collection;
+import io.tstud.paperweight.Model.Models.Collection;
 import io.tstud.paperweight.R;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;

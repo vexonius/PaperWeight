@@ -1,5 +1,5 @@
 
-package io.tstud.paperweight.Model;
+package io.tstud.paperweight.Model.Models;
 
 import androidx.room.Entity;
 
@@ -30,6 +30,10 @@ public class ImageLinks {
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public String getSmallThumbnailWithoutCurledEdge(){
+        return this.smallThumbnail.replace("&zoom=5&edge=curl", "");
     }
 
 }

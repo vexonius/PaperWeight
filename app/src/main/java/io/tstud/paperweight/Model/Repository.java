@@ -1,22 +1,20 @@
-package io.tstud.paperweight.Repo;
+package io.tstud.paperweight.Model;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.OnLifecycleEvent;
 
-import io.reactivex.SingleObserver;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import io.tstud.paperweight.Model.Collection;
-import io.tstud.paperweight.Model.Item;
-import io.tstud.paperweight.Model.VolumeInfo;
-import io.tstud.paperweight.Retrofit.GoogleBooksService;
-import io.tstud.paperweight.Retrofit.RetrofitClient;
+import io.tstud.paperweight.Model.Dao.BookDao;
+import io.tstud.paperweight.Model.Local.Database;
+import io.tstud.paperweight.Model.Models.Collection;
+import io.tstud.paperweight.Model.Models.Item;
+import io.tstud.paperweight.Model.Network.GoogleBooksService;
+import io.tstud.paperweight.Model.Network.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,71 +23,58 @@ import retrofit2.Retrofit;
 
 public class Repository {
 
+    private static final String TEST_BOOK_ID = "ibTVAQAAQBAJ";
+
     private static volatile Repository instance;
     private Retrofit apiClient;
     private GoogleBooksService apiService;
-    private MutableLiveData<VolumeInfo> bookItem = new MutableLiveData<>();
+    private Database db;
+    private BookDao bookDao;
+
+    private MutableLiveData<Item> bookItem = new MutableLiveData<>();
     private MutableLiveData<Collection> collectionTrending = new MutableLiveData<>();
     private MutableLiveData<Collection> searchedVolumes = new MutableLiveData<>();
-    private MutableLiveData<Collection> book = new MutableLiveData<>();
+
     private CompositeDisposable disposables = new CompositeDisposable();
 
 
     private Repository() {
         apiClient = RetrofitClient.getInstance();
         apiService = apiClient.create(GoogleBooksService.class);
-       // getSingleTest();
+        db = Database.getInstance();
+        bookDao = db.bookDao();
     }
 
-    public static synchronized Repository getInstance(){
-        if(instance == null)
+    public static synchronized Repository getInstance() {
+        if (instance == null)
             instance = new Repository();
 
         return instance;
     }
 
-    public MutableLiveData<VolumeInfo> getSingleTest(){
-        apiService.getSingleVolumeById("rL99E5lSM0wC")
+    public MutableLiveData<Item> getBookDetails() {
+        Observable.concat(getSingleLocalTest(), getSingleNetworkTest())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Item>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        disposables.add(d);
-                    }
+                .firstElement()
+                .doOnSuccess(item -> bookItem.setValue(item))
+                .subscribe();
 
-                    @Override
-                    public void onSuccess(Item item) {
-                        bookItem.setValue(item.getVolumeInfo());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-                });
 
         return bookItem;
     }
 
-    public MutableLiveData<VolumeInfo> getVolumeById(@NonNull String id) {
-
-        apiService.getVolumeById(id).enqueue(new Callback<Item>() {
-            @Override
-            public void onResponse(Call<Item> call, Response<Item> response) {
-                bookItem.postValue(response.body().getVolumeInfo());
-            }
-
-            @Override
-            public void onFailure(Call<Item> call, Throwable t) {
-
-            }
-        });
-
-        return bookItem;
+    public Observable<Item> getSingleNetworkTest() {
+        return apiService.getSingleVolumeById(TEST_BOOK_ID)
+                .doOnSuccess(item -> Log.d("Book fetched network", item.getId()))
+                .toObservable();
     }
 
-
+    public Observable<Item> getSingleLocalTest() {
+        return db.bookDao().getBookFromLocal(TEST_BOOK_ID)
+                .doOnSuccess(item -> Log.d("Book fetched database", item.getId()))
+                .toObservable();
+    }
 
 
     public MutableLiveData<Collection> getTrendingList() {
@@ -128,10 +113,23 @@ public class Repository {
         return searchedVolumes;
     }
 
-    public void disposeObservers(){
-        disposables.clear();
+    @SuppressLint("CheckResult")
+    public void saveBookToLocal(Item item) {
+        bookDao.saveBook(item)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aLong -> {
+                            Log.d("Book inserted", item.getId());
+                        },
+                        throwable -> {
+                            Log.e("Error", throwable.getMessage());
+                        });
+        Log.d("BOOK SAVED TO DB:", item.getId());
     }
 
+    public void disposeObservers() {
+        disposables.clear();
+    }
 
 
 }

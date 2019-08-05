@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import io.tstud.paperweight.Model.Collection;
-import io.tstud.paperweight.Repo.Repository;
+import io.tstud.paperweight.Model.Models.Collection;
+import io.tstud.paperweight.Model.Repository;
 
 /**
  * Created by etino7 on 02/06/2019.
@@ -27,7 +27,7 @@ public class BrowseViewModel extends ViewModel {
         searchResults = Transformations.switchMap(query, search -> {
 
             if (search == null || search.trim().length() == 0) {
-                // TODO: create absent livedata
+                // create empty livedata if there is no search term
                 return new MutableLiveData<>();
             } else {
                 return repository.getSearchVolumes(search);

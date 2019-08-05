@@ -24,7 +24,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.tstud.paperweight.BookDetail.BookDetailActivity;
-import io.tstud.paperweight.Model.Item;
+import io.tstud.paperweight.Model.Models.Item;
 import io.tstud.paperweight.R;
 
 /**
@@ -108,7 +108,8 @@ public class BrowseFragment extends Fragment implements ListAdapter.OnBookListen
     @Override
     public void onClick(int position, ImageView view, Item item) {
         Intent intent = new Intent(getActivity(), BookDetailActivity.class);
-        intent.putExtra(BOOK_ITEM, item.getVolumeInfo().getImageLinks().getSmallThumbnail());
+        intent.putExtra(BOOK_ITEM, item.getVolumeInfo().getImageLinks().getSmallThumbnailWithoutCurledEdge());
+        intent.putExtra("book_id", item.getId());
         intent.putExtra("title", item.getVolumeInfo().getTitle());
         intent.putExtra("author", item.getVolumeInfo().getAuthors().get(0));
         ActivityOptionsCompat options = ActivityOptionsCompat.

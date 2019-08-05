@@ -3,32 +3,34 @@ package io.tstud.paperweight.BookDetail;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import io.tstud.paperweight.Model.DaoModels.BookDaoModel;
-import io.tstud.paperweight.Model.VolumeInfo;
-import io.tstud.paperweight.Repo.Repository;
+import io.tstud.paperweight.Model.Models.Item;
+import io.tstud.paperweight.Model.Repository;
 
-/**
- * Created by etino7 on 30/06/2019.
- */
+
 public class DetailViewModel extends ViewModel {
 
-    private LiveData<VolumeInfo> bookInfo;
+    private LiveData<Item> book;
 
     private Repository repo;
 
-    public DetailViewModel(){
+    public DetailViewModel() {
         repo = Repository.getInstance();
 
-        // TODO: just a test, doesn't provide id for the book
-        bookInfo = repo.getSingleTest();
+        book = repo.getBookDetails();
     }
 
-    public LiveData<VolumeInfo> getBookInfo(String bookId){
+    public LiveData<Item> getBookInfo(String bookId) {
 
-        return bookInfo;
+        return book;
     }
 
-    public void saveBook(BookDaoModel bookToSave){
-        repo.saveBookToLocal(bookToSave);
+    public void saveCurrentBook() {
+        repo.saveBookToLocal(book.getValue());
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        repo.disposeObservers();
     }
 }

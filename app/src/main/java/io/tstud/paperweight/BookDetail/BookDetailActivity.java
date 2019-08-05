@@ -3,7 +3,6 @@ package io.tstud.paperweight.BookDetail;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,9 +14,10 @@ import androidx.lifecycle.ViewModelProviders;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.idlestar.ratingstar.RatingStarView;
 
-import io.tstud.paperweight.Model.DaoModels.BookDaoModel;
 import io.tstud.paperweight.R;
 
 public class BookDetailActivity extends AppCompatActivity {
@@ -28,6 +28,8 @@ public class BookDetailActivity extends AppCompatActivity {
     private TextView mTitle, mAuthor, mDescription;
     private DetailViewModel viewModel;
     private ExtendedFloatingActionButton fab;
+    private RatingStarView ratingStarView;
+    private Chip genre;
 
 
     @Override
@@ -42,6 +44,8 @@ public class BookDetailActivity extends AppCompatActivity {
         mAuthor = (TextView) findViewById(R.id.detailAuthor);
         mDescription = (TextView) findViewById(R.id.bookDescription);
         fab = (ExtendedFloatingActionButton) findViewById(R.id.addfab);
+        ratingStarView = (RatingStarView) findViewById(R.id.ratingStarView);
+        genre = (Chip) findViewById(R.id.genreChip);
 
         setUpActionBar();
 
@@ -51,7 +55,7 @@ public class BookDetailActivity extends AppCompatActivity {
         String item3 = extras.getString("author");
 
         Glide.with(this)
-                .load(item.replace("&zoom=5&edge=curl", ""))
+                .load(item)
                 .transforms(new CenterCrop(), new RoundedCorners(50))
                 .placeholder(new ColorDrawable(ContextCompat.getColor(this, R.color.dirty_white)))
                 .into(imgView);
@@ -59,8 +63,10 @@ public class BookDetailActivity extends AppCompatActivity {
         mTitle.setText(item2);
         mAuthor.setText(item3);
 
-        viewModel.getBookInfo("blood song").observe(this, volumeInfo -> {
-            mDescription.setText(volumeInfo.getDescription());
+        viewModel.getBookInfo("blood song").observe(this, bookitem -> {
+            mDescription.setText(bookitem.getVolumeInfo().getCleanDescription());
+            ratingStarView.setRating(3f);
+            genre.setText(bookitem.getVolumeInfo().getCategories().get(0));
         });
 
         setFAB();
@@ -69,7 +75,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
     public void setFAB() {
 
-        fab.setOnClickListener(view -> viewModel.saveBook(book));
+        fab.setOnClickListener(view -> viewModel.saveCurrentBook());
     }
 
     public void setUpActionBar() {

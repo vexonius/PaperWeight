@@ -17,7 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import java.util.List;
 
-import io.tstud.paperweight.Model.Item;
+import io.tstud.paperweight.Model.Models.Item;
 import io.tstud.paperweight.R;
 
 
@@ -58,7 +58,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
 
         if (volume.getVolumeInfo().getImageLinks() != null) {
             Glide.with(holder.itemView.getContext())
-                    .load(volume.getVolumeInfo().getImageLinks().getSmallThumbnail().replace("&zoom=5&edge=curl", ""))
+                    .load(volume.getVolumeInfo().getImageLinks().getSmallThumbnailWithoutCurledEdge())
                     .transforms(new CenterCrop(), new RoundedCorners(50))
                     .placeholder(new ColorDrawable(ContextCompat.getColor(holder.itemView.getContext(), R.color.dirty_white)))
                     .into(cover);
