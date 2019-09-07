@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,121 +7,140 @@
     android:layout_height="match_parent"
     tools:context=".BookDetail.BookDetailActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/carouselImageContainer"
-        android:layout_width="120dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintDimensionRatio="1:1.5"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/detailCover"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/lotr"
-            android:transitionName="bookCover"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:paddingBottom="20dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/carouselImageContainer"
+                android:layout_width="120dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintDimensionRatio="1:1.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/genreChip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Fantasy"
-        android:textSize="8dp"
-        app:chipBackgroundColor="#ffffff"
-        app:chipStrokeColor="@color/colorAccent"
-        app:chipStrokeWidth="2dp"
-        app:layout_constraintStart_toStartOf="@+id/detailAuthor"
-        app:layout_constraintTop_toBottomOf="@+id/detailAuthor"></com.google.android.material.chip.Chip>
+                <ImageView
+                    android:id="@+id/detailCover"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/lotr"
+                    android:transitionName="bookCover"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></ImageView>
 
-    <com.idlestar.ratingstar.RatingStarView
-        android:id="@+id/ratingStarView"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:background="#fff"
-        app:layout_constraintStart_toEndOf="@+id/carouselImageContainer"
-        app:layout_constraintTop_toBottomOf="@+id/genreChip"
-        app:rsv_cornerRadius="4dp"
-        app:rsv_drawStrokeForEmptyStar="false"
-        app:rsv_drawStrokeForHalfStar="true"
-        app:rsv_enableSelectRating="true"
-        app:rsv_onlyHalfStar="true"
-        app:rsv_rating="1"
-        app:rsv_starBackgroundColor="@color/dirty_white"
-        app:rsv_starForegroundColor="@color/colorAccent"
-        app:rsv_starMargin="4dp"
-        app:rsv_starNum="5"
-        app:rsv_starThickness="0.6"
-        app:rsv_strokeWidth="0px" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/detailTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="16dp"
-        android:maxLines="4"
-        android:textColor="?colorOnBackground"
-        android:textSize="26dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/carouselImageContainer"
-        app:layout_constraintTop_toTopOf="@+id/carouselImageContainer"
-        tools:text="Storm of Swords" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/genreChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Fantasy"
+                android:textSize="8dp"
+                app:chipBackgroundColor="#ffffff"
+                app:chipStrokeColor="@color/colorAccent"
+                app:chipStrokeWidth="2dp"
+                app:layout_constraintEnd_toEndOf="@+id/detailAuthor"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/detailAuthor"
+                app:layout_constraintTop_toBottomOf="@+id/detailAuthor"></com.google.android.material.chip.Chip>
 
-    <TextView
-        android:id="@+id/detailAuthor"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="16dp"
-        android:singleLine="true"
-        android:textColor="#636363"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/carouselImageContainer"
-        app:layout_constraintTop_toBottomOf="@+id/detailTitle"
-        tools:text=" by George R. R. Martin" />
+            <com.idlestar.ratingstar.RatingStarView
+                android:id="@+id/ratingStarView"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:background="#fff"
+                app:layout_constraintStart_toEndOf="@+id/carouselImageContainer"
+                app:layout_constraintTop_toBottomOf="@+id/genreChip"
+                app:rsv_cornerRadius="4dp"
+                app:rsv_drawStrokeForEmptyStar="false"
+                app:rsv_drawStrokeForHalfStar="true"
+                app:rsv_enableSelectRating="true"
+                app:rsv_onlyHalfStar="true"
+                app:rsv_rating="1"
+                app:rsv_starBackgroundColor="@color/dirty_white"
+                app:rsv_starForegroundColor="@color/yellowstar"
+                app:rsv_starMargin="4dp"
+                app:rsv_starNum="5"
+                app:rsv_starThickness="0.6"
+                app:rsv_strokeWidth="0px" />
 
-    <TextView
-        android:id="@+id/bookDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:maxLines="5"
-        android:paddingStart="16dp"
-        android:paddingTop="32dp"
-        android:paddingEnd="15dp"
-        android:paddingBottom="8dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/carouselImageContainer"
-        tools:text="@string/lorem" />
+            <TextView
+                android:id="@+id/detailTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="16dp"
+                android:maxLines="4"
+                android:textColor="?colorOnBackground"
+                android:textSize="26dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/carouselImageContainer"
+                app:layout_constraintTop_toTopOf="@+id/carouselImageContainer"
+                tools:text="Storm of Swords" />
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:background="@drawable/chip"
-        android:src="@drawable/expand_more"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookDescription" />
+            <TextView
+                android:id="@+id/detailAuthor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:singleLine="true"
+                android:textColor="@color/light_subtitle"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/carouselImageContainer"
+                app:layout_constraintTop_toBottomOf="@+id/detailTitle"
+                tools:text=" by George R. R. Martin" />
 
+            <TextView
+                android:id="@+id/bookDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:maxLines="5"
+                android:paddingStart="16dp"
+                android:paddingTop="32dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="8dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingStarView"
+                tools:text="@string/lorem" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/chip"
+                android:src="@drawable/expand_more"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bookDescription" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addfab"
@@ -129,9 +149,9 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:text="Add to Library"
-        app:backgroundTint="@color/colorAccent"
+        android:textColor="@color/colorAccent"
+        app:backgroundTint="@color/dirty_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"></com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

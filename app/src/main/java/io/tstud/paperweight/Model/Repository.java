@@ -5,13 +5,19 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.Date;
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.tstud.paperweight.Model.Dao.BookDao;
+import io.tstud.paperweight.Model.Dao.CurrentlyReadingDao;
 import io.tstud.paperweight.Model.Local.Database;
+import io.tstud.paperweight.Model.Models.BookWithStats;
 import io.tstud.paperweight.Model.Models.Collection;
+import io.tstud.paperweight.Model.Models.CurrentlyReadingStats;
 import io.tstud.paperweight.Model.Models.Item;
 import io.tstud.paperweight.Model.Network.GoogleBooksService;
 import io.tstud.paperweight.Model.Network.RetrofitClient;
@@ -30,10 +36,12 @@ public class Repository {
     private GoogleBooksService apiService;
     private Database db;
     private BookDao bookDao;
+    private CurrentlyReadingDao currentlyReadingDao;
 
     private MutableLiveData<Item> bookItem = new MutableLiveData<>();
     private MutableLiveData<Collection> collectionTrending = new MutableLiveData<>();
     private MutableLiveData<Collection> searchedVolumes = new MutableLiveData<>();
+    private MutableLiveData<List<BookWithStats>> booksWithStats = new MutableLiveData<>();
 
     private CompositeDisposable disposables = new CompositeDisposable();
 
@@ -43,6 +51,8 @@ public class Repository {
         apiService = apiClient.create(GoogleBooksService.class);
         db = Database.getInstance();
         bookDao = db.bookDao();
+        currentlyReadingDao = db.currentlyReadingDao();
+        currentlyReadingDao = db.currentlyReadingDao();
     }
 
     public static synchronized Repository getInstance() {
@@ -52,26 +62,29 @@ public class Repository {
         return instance;
     }
 
-    public MutableLiveData<Item> getBookDetails() {
-        Observable.concat(getSingleLocalTest(), getSingleNetworkTest())
+    public MutableLiveData<Item> getBookDetails(String bookToFetch) {
+        Observable.concat(getSingleLocalTest(bookToFetch), getSingleNetworkTest(bookToFetch))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .firstElement()
                 .doOnSuccess(item -> bookItem.setValue(item))
+                .doOnSubscribe(disposable -> disposables.add(disposable))
                 .subscribe();
-
 
         return bookItem;
     }
 
-    public Observable<Item> getSingleNetworkTest() {
-        return apiService.getSingleVolumeById(TEST_BOOK_ID)
-                .doOnSuccess(item -> Log.d("Book fetched network", item.getId()))
+    public Observable<Item> getSingleNetworkTest(String id) {
+        return apiService.getSingleVolumeById(id)
+                .doOnSuccess(item -> {
+                    saveBookToLocal(item);
+                    Log.d("Book fetched network", item.getId());
+                })
                 .toObservable();
     }
 
-    public Observable<Item> getSingleLocalTest() {
-        return db.bookDao().getBookFromLocal(TEST_BOOK_ID)
+    public Observable<Item> getSingleLocalTest(String id) {
+        return db.bookDao().getBookFromLocal(id)
                 .doOnSuccess(item -> Log.d("Book fetched database", item.getId()))
                 .toObservable();
     }
@@ -127,9 +140,46 @@ public class Repository {
         Log.d("BOOK SAVED TO DB:", item.getId());
     }
 
+    public void saveBookToCurrentlyReading(String bookId){
+        CurrentlyReadingStats stats = new CurrentlyReadingStats();
+        stats.setStatsId(bookId);
+        stats.setStartedReading(new Date());
+        stats.setLastUpdated(new Date());
+        currentlyReadingDao.createNewReadingStats(stats)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> disposables.add(disposable))
+                .doOnError(throwable -> Log.e("Repo currently", throwable.getMessage()))
+                .subscribe();
+    }
+
+    public void updateBookProgress(CurrentlyReadingStats stats, int progress){
+        stats.setLastUpdated(new Date());
+        stats.setReadProgress(progress);
+
+        currentlyReadingDao.createNewReadingStats(stats)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> disposables.add(disposable))
+                .doOnError(throwable -> Log.e("Repo currently", throwable.getMessage()))
+                .subscribe();
+    }
+
+    public MutableLiveData<List<BookWithStats>> getAllBooksWithStats(){
+        currentlyReadingDao.allBookWithStats()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(subscription -> disposables.add(subscription))
+                .doOnError(throwable -> Log.e("fetching current error", throwable.getMessage()))
+                .doOnNext(item -> booksWithStats.postValue(item))
+                .subscribe();
+
+        return booksWithStats;
+    }
+
+
     public void disposeObservers() {
         disposables.clear();
     }
-
 
 }

@@ -19,32 +19,33 @@ import java.util.List;
 
 import io.tstud.paperweight.Model.Models.Item;
 import io.tstud.paperweight.R;
+import io.tstud.paperweight.Utils.BookClickListener;
 
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CarouselViewHolder> {
     private List<Item> volumes;
 
-    private OnBookListener mOnBookListener;
+    private BookClickListener mBookClickListener;
 
 
-    public ListAdapter(List<Item> volumes, OnBookListener onBookListener) {
+    public ListAdapter(List<Item> volumes, BookClickListener bookClickListener) {
         this.volumes = volumes;
-        this.mOnBookListener = onBookListener;
+        this.mBookClickListener = bookClickListener;
     }
 
 
     public class CarouselViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
         private TextView title, author;
         private ImageView cover;
-        OnBookListener onBookListener;
+        BookClickListener bookClickListener;
 
-        public CarouselViewHolder(@NonNull View itemView, OnBookListener onBookListener) {
+        public CarouselViewHolder(@NonNull View itemView, BookClickListener bookClickListener) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.listTitle);
             author = (TextView) itemView.findViewById(R.id.listAuthor);
             cover = (ImageView) itemView.findViewById(R.id.listCover);
-            this.onBookListener = onBookListener;
+            this.bookClickListener = bookClickListener;
 
             itemView.setOnClickListener(this);
 
@@ -52,14 +53,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CarouselViewHo
 
         @Override
         public void onClick(View v) {
-            onBookListener.onClick(getAdapterPosition(), cover, volumes.get(getAdapterPosition()));
+            bookClickListener.onClick(getAdapterPosition(), cover, volumes.get(getAdapterPosition()));
         }
     }
 
     @Override
     public CarouselViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-        return new CarouselViewHolder(view, mOnBookListener);
+        return new CarouselViewHolder(view, mBookClickListener);
     }
 
     @Override
@@ -88,10 +89,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CarouselViewHo
     public void updateData(List<Item> list) {
         this.volumes = list;
         notifyDataSetChanged();
-    }
-
-    public interface OnBookListener{
-        void onClick(int position, ImageView view, Item item);
     }
 
     @Override

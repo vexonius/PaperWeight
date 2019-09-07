@@ -1,6 +1,5 @@
 package io.tstud.paperweight.Activities;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -11,15 +10,17 @@ public class MainViewModel extends ViewModel {
 
     private MutableLiveData<Integer> currentPosition = new MutableLiveData<>();
 
-    public MainViewModel(){
+    public MainViewModel() {
         currentPosition.setValue(1);
     }
 
-    public MutableLiveData<Integer> getCurrentPosition(){
+    public MutableLiveData<Integer> getCurrentPosition() {
         return currentPosition;
     }
 
-    public MutableLiveData<Integer> setCurrentPosition(){
+    public MutableLiveData<Integer> setCurrentPosition() {
         return currentPosition;
     }
+
+
 }

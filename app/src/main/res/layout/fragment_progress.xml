@@ -4,98 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.ProgressFragment">
+    tools:context=".Progress.ProgressFragment">
 
-    <ImageView
-        android:id="@+id/progress_cover"
-        android:layout_width="90dp"
+    <TextView
+        android:id="@+id/trend"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:text="@string/currently_reading"
+        android:textColor="?colorOnBackground"
+        android:textSize="16dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
+        android:id="@+id/currentlyMore"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:maxLines="2"
-        android:text="Lord of the Rings: The Fellowship of the Ring"
-        android:textColor="@android:color/black"
-        android:textSize="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/more"
+        android:textAllCaps="true"
+        android:textColor="@color/colorAccent"
+        android:textSize="14dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/circular_progress"
-        app:layout_constraintStart_toEndOf="@+id/progress_cover"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
-        android:textSize="14dp"
-        android:text="by"
-        app:layout_constraintStart_toEndOf="@+id/progress_cover"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:textSize="14dp"
-        android:text="J. R. R. Tolkien"
-        android:textColor="#00d3af"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <com.mikhaellopez.circularprogressbar.CircularProgressBar
-        android:id="@+id/circular_progress"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="24dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/progress_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        app:cpb_background_progressbar_color="@color/dirty_white"
-        app:cpb_background_progressbar_width="1dp"
-        app:cpb_progress="37"
-        app:cpb_progressbar_color="@color/colorAccent"
-        app:cpb_progressbar_width="3dp"
-        app:layout_constraintBottom_toBottomOf="@+id/progress_cover"
+        android:minHeight="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/progress_cover" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trend"
+        tools:itemCount="10"
+        tools:listitem="@layout/currently_reading_list_item"></androidx.recyclerview.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="37"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/circular_progress"
-        app:layout_constraintEnd_toEndOf="@+id/circular_progress"
-        app:layout_constraintStart_toStartOf="@+id/circular_progress"
-        app:layout_constraintTop_toTopOf="@+id/circular_progress" />
 
-    <TextView
-        android:id="@+id/chip_progress_action"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/chip"
-        android:paddingBottom="6dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="6dp"
-        android:textSize="14dp"
-        android:text="Mark as read"
-        app:layout_constraintStart_toEndOf="@+id/progress_cover"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:text="Trending"
+                android:text="@string/trending"
                 android:textColor="?colorOnBackground"
                 android:textSize="16dp"
                 android:textStyle="bold"
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="more"
+                android:text="@string/more"
                 android:textAllCaps="true"
                 android:textColor="@color/colorAccent"
                 android:textSize="14dp"
@@ -86,7 +86,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/trend">
-
             </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
@@ -95,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="Recommended"
+                android:text="@string/recommended"
                 android:textColor="?colorOnBackground"
                 android:textSize="16dp"
                 android:textStyle="bold"
@@ -107,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="more"
+                android:text="@string/more"
                 android:textAllCaps="true"
                 android:textColor="@color/colorAccent"
                 android:textSize="14dp"

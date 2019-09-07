@@ -9,4 +9,10 @@
     <color name="item_color">#666666</color>
     <color name="dirty_white">#f0f0f0</color>
     <color name="darken">#2B2B2B</color>
+
+    <color name="yellowstar">#FFB300</color>
+    <color name="light_subtitle">#636363</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 </resources>

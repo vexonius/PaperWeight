@@ -16,8 +16,8 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import io.tstud.paperweight.Browse.BrowseFragment;
 import io.tstud.paperweight.Fragments.ProfileFragment;
-import io.tstud.paperweight.Fragments.ProgressFragment;
 import io.tstud.paperweight.Home.HomeFragment;
+import io.tstud.paperweight.Progress.ProgressFragment;
 import io.tstud.paperweight.R;
 
 public class MainActivity extends AppCompatActivity {

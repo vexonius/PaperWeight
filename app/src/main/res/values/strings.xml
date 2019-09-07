@@ -4,4 +4,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis, sapien et sagittis interdum, lacus sapien malesuada orci, convallis tempor nisi leo id leo. Donec dignissim pharetra leo luctus scelerisque. Nulla quis scelerisque ligula, sit amet dapibus orci. Etiam mauris neque, dapibus et odio in, finibus suscipit neque. Cras ac turpis ut purus aliquam varius. In hac habitasse platea dictumst. Vestibulum erat libero, luctus eu imperdiet pretium, ultrices non neque. Ut a felis a justo sodales sollicitudin. Aliquam erat volutpat. Maecenas fermentum viverra porta. Cras tristique bibendum elit, at interdum nibh rhoncus vel. Fusce id eros nisl.</string>
+    <string name="currently_reading">Currently reading</string>
+    <string name="more">more</string>
+    <string name="trending">Trending</string>
+    <string name="recommended">Recommended</string>
+    <string name="search_by_title_author_or_isbn">Search by Title, Author or ISBN</string>
 </resources>

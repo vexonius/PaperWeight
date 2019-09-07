@@ -14,7 +14,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/rounded_searchbar"
-        android:hint="Search by Title, Author or ISBN"
+        android:hint="@string/search_by_title_author_or_isbn"
         android:singleLine="true"
         android:padding="14dp"
         android:textSize="16dp"
@@ -35,29 +35,22 @@
         app:layout_constraintTop_toBottomOf="@+id/searchbar">
 
         <com.google.android.material.chip.Chip
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            style="@style/LightChip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Game of Thrones"
-            app:chipSurfaceColor="#ffffff"
-            app:chipStrokeColor="?colorControlHighlight"
-            app:chipStrokeWidth="2dp"/>
+            android:text="Game of Thrones" />
 
         <com.google.android.material.chip.Chip
+            style="@style/LightChip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kingkiller"
-            app:chipSurfaceColor="#ffffff"
-            app:chipStrokeColor="?colorControlHighlight"
-            app:chipStrokeWidth="2dp"/>
+            android:text="Kingkiller" />
 
         <com.google.android.material.chip.Chip
+            style="@style/LightChip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="The Way of Kings"
-            app:chipSurfaceColor="#ffffff"
-            app:chipStrokeColor="?colorControlHighlight"
-            app:chipStrokeWidth="2dp"/>
+            android:text="The Way of Kings" />
     </com.google.android.material.chip.ChipGroup>
 
     <TextView
@@ -75,6 +68,7 @@
         app:layout_constraintTop_toBottomOf="@+id/chips" />
 
     <androidx.recyclerview.widget.RecyclerView
+        tools:listitem="@layout/list_item"
         android:id="@+id/categoriesRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"

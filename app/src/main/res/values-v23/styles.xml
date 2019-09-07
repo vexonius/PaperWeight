@@ -11,4 +11,11 @@
 
     </style>
 
+    <style name="LightChip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipStrokeColor">@color/dirty_white</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="chipBackgroundColor">@android:color/transparent</item>
+        <item name="android:textColor">?colorControlNormal</item>
+    </style>
+
 </resources>
