@@ -192,6 +192,9 @@ public class VolumeInfo {
     }
 
     public Double getAverageRating() {
+        if(averageRating==null)
+            return 0d;
+
         return averageRating;
     }
 

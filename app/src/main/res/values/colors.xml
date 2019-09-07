@@ -15,4 +15,6 @@
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+
+    <color name="redish">#ff5252</color>
 </resources>

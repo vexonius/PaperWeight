@@ -11,4 +11,6 @@ public interface CurrentlyReadingClickListener extends BookClickListener {
     void onUpdateProgressClick(int position, BookWithStats bookAndStats);
 
     void onMarkReadClick(int position, Item item);
+
+    void onSwiped(int position);
 }

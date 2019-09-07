@@ -73,7 +73,5 @@ public class BottomSheet extends BottomSheetDialogFragment {
     public void onStop(){
         mViewModel.updateBookProgress(progressToUpdate);
         super.onStop();
-
-
     }
 }

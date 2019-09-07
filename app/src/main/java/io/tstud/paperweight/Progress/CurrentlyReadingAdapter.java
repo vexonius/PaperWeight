@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +41,7 @@ public class CurrentlyReadingAdapter extends RecyclerView.Adapter<CurrentlyReadi
         Chip markAsRead, updateProgress;
         CurrentlyReadingClickListener readingClickListener;
         CircularProgressBar circularProgressBar;
+        public ConstraintLayout foreground, background;
 
         public CurrentlyReadingViewHolder(@NonNull View itemView, CurrentlyReadingClickListener readingClickListener) {
             super(itemView);
@@ -50,6 +52,7 @@ public class CurrentlyReadingAdapter extends RecyclerView.Adapter<CurrentlyReadi
             markAsRead = (Chip) itemView.findViewById(R.id.mark_as_read_chip);
             updateProgress = (Chip) itemView.findViewById(R.id.update_chip);
             circularProgressBar = (CircularProgressBar)itemView.findViewById(R.id.circular_progress);
+            foreground = (ConstraintLayout)itemView.findViewById(R.id.item_content);
 
             this.readingClickListener = readingClickListener;
             itemView.setOnClickListener(this);
@@ -97,6 +100,11 @@ public class CurrentlyReadingAdapter extends RecyclerView.Adapter<CurrentlyReadi
     public void updateData(List<BookWithStats> list) {
         this.booksAndStats = list;
         notifyDataSetChanged();
+    }
+
+    public void removeItem(int position) {
+        booksAndStats.remove(position);
+        notifyItemRemoved(position);
     }
 
     @Override

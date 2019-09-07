@@ -3,107 +3,121 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="16dp">
+    android:background="@color/redish">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cr_constraint"
-        android:layout_width="80dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintDimensionRatio="1:1.5"
+        android:id="@+id/item_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?colorSurface"
+        android:paddingBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/cr_cover"
-            android:layout_width="0dp"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cr_constraint"
+            android:layout_width="80dp"
             android:layout_height="0dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/lotr"
-            android:transitionName="bookCover"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintDimensionRatio="1:1.5"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/cr_cover"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/lotr"
+                android:transitionName="bookCover"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/cr_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="46dp"
+            android:maxLines="2"
+            android:text="Lord of the Rings: The Fellowship of the Ring"
+            android:textColor="@android:color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cr_constraint"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/cr_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="J. R. R. Tolkien"
+            android:textColor="@color/light_subtitle"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="@+id/cr_title"
+            app:layout_constraintTop_toBottomOf="@+id/cr_title" />
+
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/circular_progress"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            app:cpb_background_progressbar_color="@color/dirty_white"
+            app:cpb_background_progressbar_width="1dp"
+            app:cpb_progress="37"
+            app:cpb_progressbar_color="@color/colorAccent"
+            app:cpb_progressbar_width="3dp"
+            app:cpb_round_border="true"
+            app:layout_constraintBottom_toBottomOf="@+id/mark_as_read_chip"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cr_title" />
+
+        <TextView
+            android:id="@+id/cr_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="37"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/circular_progress"
+            app:layout_constraintEnd_toEndOf="@+id/circular_progress"
+            app:layout_constraintStart_toStartOf="@+id/circular_progress"
+            app:layout_constraintTop_toTopOf="@+id/circular_progress" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/mark_as_read_chip"
+            style="@style/LightChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Mark as read"
+            android:textSize="12dp"
+            app:chipStrokeColor="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="@+id/cr_author"
+            app:layout_constraintTop_toBottomOf="@+id/cr_author" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/update_chip"
+            style="@style/LightChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Update"
+            android:textSize="12dp"
+            app:layout_constraintStart_toEndOf="@+id/mark_as_read_chip"
+            app:layout_constraintTop_toBottomOf="@+id/cr_author" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/cr_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="46dp"
-        android:maxLines="2"
-        android:text="Lord of the Rings: The Fellowship of the Ring"
-        android:textColor="@android:color/black"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cr_constraint"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/cr_author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="J. R. R. Tolkien"
-        android:textColor="@color/light_subtitle"
-        android:textSize="16dp"
-        app:layout_constraintStart_toStartOf="@+id/cr_title"
-        app:layout_constraintTop_toBottomOf="@+id/cr_title" />
-
-    <com.mikhaellopez.circularprogressbar.CircularProgressBar
-        android:id="@+id/circular_progress"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="16dp"
-        app:cpb_background_progressbar_color="@color/dirty_white"
-        app:cpb_background_progressbar_width="1dp"
-        app:cpb_progress="37"
-        app:cpb_progressbar_color="@color/colorAccent"
-        app:cpb_progressbar_width="3dp"
-        app:cpb_round_border="true"
-        app:layout_constraintBottom_toBottomOf="@+id/mark_as_read_chip"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cr_title" />
-
-    <TextView
-        android:id="@+id/cr_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="37"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/circular_progress"
-        app:layout_constraintEnd_toEndOf="@+id/circular_progress"
-        app:layout_constraintStart_toStartOf="@+id/circular_progress"
-        app:layout_constraintTop_toTopOf="@+id/circular_progress" />
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/mark_as_read_chip"
-        style="@style/LightChip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textSize="12dp"
-        android:text="Mark as read"
-        app:chipStrokeColor="@color/colorAccent"
-        app:layout_constraintStart_toStartOf="@+id/cr_author"
-        app:layout_constraintTop_toBottomOf="@+id/cr_author" />
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/update_chip"
-        style="@style/LightChip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:textSize="12dp"
-        android:text="Update"
-        app:layout_constraintStart_toEndOf="@+id/mark_as_read_chip"
-        app:layout_constraintTop_toBottomOf="@+id/cr_author" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

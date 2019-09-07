@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ import io.tstud.paperweight.Model.Models.Item;
 import io.tstud.paperweight.R;
 import io.tstud.paperweight.Utils.BottomSheet;
 import io.tstud.paperweight.Utils.CurrentlyReadingClickListener;
+import io.tstud.paperweight.Utils.SwipeToDeleteHelper;
 
 
 public class ProgressFragment extends Fragment implements CurrentlyReadingClickListener {
@@ -37,7 +39,7 @@ public class ProgressFragment extends Fragment implements CurrentlyReadingClickL
         return new ProgressFragment();
     }
 
-    private ProgressFragment() {
+    public ProgressFragment() {
         // Required empty constructor
     }
 
@@ -49,6 +51,9 @@ public class ProgressFragment extends Fragment implements CurrentlyReadingClickL
         View v = inflater.inflate(R.layout.fragment_progress, container, false);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.progress_recycler);
+
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new SwipeToDeleteHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
 
         viewModel = ViewModelProviders.of(getActivity()).get(ProgressViewModel.class);
 
@@ -70,13 +75,17 @@ public class ProgressFragment extends Fragment implements CurrentlyReadingClickL
     public void onUpdateProgressClick(int position, BookWithStats item) {
         viewModel.setBookToUpdate(item);
         BottomSheet bottomSheet = BottomSheet.newInstance();
-        bottomSheet.show(getActivity().getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
-
+        bottomSheet.show(getActivity().getSupportFragmentManager(), "bottomsheet");
     }
 
     @Override
     public void onMarkReadClick(int position, Item item) {
 
+    }
+
+    @Override
+    public void onSwiped(int position) {
+        adapter.removeItem(position);
     }
 
     @Override

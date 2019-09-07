@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setDefaultScreen(){
         ft = getSupportFragmentManager().beginTransaction();
-        HomeFragment hf = new HomeFragment();
+        HomeFragment hf = HomeFragment.newInstance();
         ft.replace(R.id.frame, hf);
         ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.commit();

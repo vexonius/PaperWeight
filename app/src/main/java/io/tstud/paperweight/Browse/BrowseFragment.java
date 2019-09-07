@@ -28,9 +28,7 @@ import io.tstud.paperweight.Model.Models.Item;
 import io.tstud.paperweight.R;
 import io.tstud.paperweight.Utils.BookClickListener;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class BrowseFragment extends Fragment implements BookClickListener {
 
     private final static String BOOK_ITEM = "BOOK_INFO";
