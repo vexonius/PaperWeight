@@ -14,9 +14,16 @@ import io.tstud.paperweight.Model.Local.CustomTypeConverters;
 @Entity(tableName = "currently_reading_stats")
 public class CurrentlyReadingStats {
 
+    public static final int NOT_READ = 0;
+    public static final int READING = 1;
+    public static final int READ = 2;
+
     @PrimaryKey
     @NonNull
     private String statsId;
+
+    @ColumnInfo(name = "status")
+    private int readStatus = NOT_READ;
 
     @ColumnInfo(name = "progress")
     private int readProgress = 0;
@@ -82,5 +89,13 @@ public class CurrentlyReadingStats {
 
     public void setStatsId(@NonNull String statsId) {
         this.statsId = statsId;
+    }
+
+    public void setReadStatus(int readStatus) {
+        this.readStatus = readStatus;
+    }
+
+    public int getReadStatus() {
+        return readStatus;
     }
 }

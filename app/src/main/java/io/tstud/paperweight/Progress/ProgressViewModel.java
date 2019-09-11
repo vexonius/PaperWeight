@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import io.tstud.paperweight.Model.Models.BookWithStats;
+import io.tstud.paperweight.Model.Models.CurrentlyReadingStats;
 import io.tstud.paperweight.Model.Repository;
 
 /**
@@ -37,6 +38,22 @@ public class ProgressViewModel extends ViewModel {
 
     public LiveData<BookWithStats> getBookToUpdate(){
         return bookToUpdate;
+    }
+
+    public void deleteCurrentlyReadingStats(CurrentlyReadingStats currentlyReadingStats){
+        repo.deleteCurrentlyReadingStats(currentlyReadingStats);
+    }
+
+    public void undoDelete(){
+        repo.undoDelete();
+    }
+
+    public void undoMarkAsRead(){
+        repo.undoMarkAsRead();
+    }
+
+    public void markAsRead(CurrentlyReadingStats stats){
+        repo.markAsRead(stats);
     }
 
 }

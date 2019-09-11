@@ -7,10 +7,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.tstud.paperweight.Model.Dao.BookDao;
 import io.tstud.paperweight.Model.Dao.CurrentlyReadingDao;
@@ -44,6 +46,7 @@ public class Repository {
     private MutableLiveData<List<BookWithStats>> booksWithStats = new MutableLiveData<>();
 
     private CompositeDisposable disposables = new CompositeDisposable();
+    private Disposable deleteDisposable, readDisposable;
 
 
     private Repository() {
@@ -140,9 +143,10 @@ public class Repository {
         Log.d("BOOK SAVED TO DB:", item.getId());
     }
 
-    public void saveBookToCurrentlyReading(String bookId){
+    public void saveBookToCurrentlyReading(String bookId) {
         CurrentlyReadingStats stats = new CurrentlyReadingStats();
         stats.setStatsId(bookId);
+        stats.setReadStatus(CurrentlyReadingStats.READING);
         stats.setStartedReading(new Date());
         stats.setLastUpdated(new Date());
         currentlyReadingDao.createNewReadingStats(stats)
@@ -153,7 +157,34 @@ public class Repository {
                 .subscribe();
     }
 
-    public void updateBookProgress(CurrentlyReadingStats stats, int progress){
+    public void deleteCurrentlyReadingStats(CurrentlyReadingStats stats) {
+        deleteDisposable = Observable.timer(3, TimeUnit.SECONDS)
+                .flatMap(aLong -> {
+                    return
+                            currentlyReadingDao.deleteCurrentlyReadingStats(stats)
+                                    .doOnSuccess(id -> Log.d("DELETED", String.valueOf(id)))
+                                    .doOnError(throwable -> Log.e("Repo", throwable.getMessage())).toObservable();
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> disposables.add(disposable))
+                .subscribe();
+    }
+
+    public void markAsRead(CurrentlyReadingStats stats) {
+        stats.setReadStatus(CurrentlyReadingStats.READ);
+        readDisposable = Observable.timer(3, TimeUnit.SECONDS)
+                .flatMap(aLong -> {
+                    return
+                            currentlyReadingDao.markAsRead(stats)
+                                    .doOnSuccess(id -> Log.d("MARKED READ", String.valueOf(id)))
+                                    .doOnError(throwable -> Log.e("Repo", throwable.getMessage())).toObservable();
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> disposables.add(disposable))
+                .subscribe();
+    }
+
+    public void updateBookProgress(CurrentlyReadingStats stats, int progress) {
         stats.setLastUpdated(new Date());
         stats.setReadProgress(progress);
 
@@ -165,16 +196,28 @@ public class Repository {
                 .subscribe();
     }
 
-    public MutableLiveData<List<BookWithStats>> getAllBooksWithStats(){
+    public MutableLiveData<List<BookWithStats>> getAllBooksWithStats() {
         currentlyReadingDao.allBookWithStats()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(subscription -> disposables.add(subscription))
+                .doOnSubscribe(sub -> disposables.add(sub))
                 .doOnError(throwable -> Log.e("fetching current error", throwable.getMessage()))
                 .doOnNext(item -> booksWithStats.postValue(item))
                 .subscribe();
 
         return booksWithStats;
+    }
+
+    public void undoDelete() {
+        if (!deleteDisposable.isDisposed()) {
+            deleteDisposable.dispose();
+        }
+    }
+
+    public void undoMarkAsRead() {
+        if (!readDisposable.isDisposed()) {
+            readDisposable.dispose();
+        }
     }
 
 

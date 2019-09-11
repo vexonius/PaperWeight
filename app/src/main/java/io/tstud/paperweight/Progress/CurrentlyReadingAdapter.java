@@ -53,12 +53,13 @@ public class CurrentlyReadingAdapter extends RecyclerView.Adapter<CurrentlyReadi
             updateProgress = (Chip) itemView.findViewById(R.id.update_chip);
             circularProgressBar = (CircularProgressBar)itemView.findViewById(R.id.circular_progress);
             foreground = (ConstraintLayout)itemView.findViewById(R.id.item_content);
+            background = (ConstraintLayout)itemView.findViewById(R.id.item_background);
 
             this.readingClickListener = readingClickListener;
             itemView.setOnClickListener(this);
 
             updateProgress.setOnClickListener(view -> readingClickListener.onUpdateProgressClick(getAdapterPosition(), booksAndStats.get(getAdapterPosition())));
-            markAsRead.setOnClickListener(view -> readingClickListener.onMarkReadClick(getAdapterPosition(), booksAndStats.get(getAdapterPosition()).getItem()));
+            markAsRead.setOnClickListener(view -> readingClickListener.onMarked(getAdapterPosition()));
         }
 
         @Override
@@ -105,6 +106,11 @@ public class CurrentlyReadingAdapter extends RecyclerView.Adapter<CurrentlyReadi
     public void removeItem(int position) {
         booksAndStats.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void insertItem(int position, BookWithStats item) {
+        booksAndStats.add(position, item);
+        notifyItemInserted(position);
     }
 
     @Override

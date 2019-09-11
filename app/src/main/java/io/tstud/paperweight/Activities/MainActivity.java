@@ -2,16 +2,13 @@ package io.tstud.paperweight.Activities;
 
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import io.tstud.paperweight.Browse.BrowseFragment;
@@ -63,56 +60,56 @@ public class MainActivity extends AppCompatActivity {
         //Text
         bottomNavigation.setTextVisibility(false);
 
-        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                ft = getSupportFragmentManager().beginTransaction();
+        bottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            ft = getSupportFragmentManager().beginTransaction();
 
-                switch (item.getItemId()) {
+            switch (item.getItemId()) {
 
-                    case R.id.home_item:
-                        mTitle.setText("Dashboard");
-                        HomeFragment hf = HomeFragment.newInstance();
-                        ft.replace(R.id.frame, hf);
-                        ft.addToBackStack(null);
-                        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-                        ft.commit();
-                        break;
+                case R.id.home_item:
+                    mTitle.setText("Dashboard");
+                    HomeFragment hf = HomeFragment.newInstance();
+                    ft.replace(R.id.frame, hf);
+                    ft.addToBackStack(null);
+                    ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                    ft.commit();
+                    break;
 
-                    case R.id.browse_item:
-                        mTitle.setText("Browse");
-                        BrowseFragment bf = BrowseFragment.newInstance();
-                        ft.replace(R.id.frame, bf);
-                        ft.addToBackStack(null);
-                        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-                        ft.commit();
-                        break;
+                case R.id.browse_item:
+                    mTitle.setText("Browse");
+                    BrowseFragment bf = BrowseFragment.newInstance();
+                    ft.replace(R.id.frame, bf);
+                    ft.addToBackStack(null);
+                    ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                    ft.commit();
+                    break;
 
-                    case R.id.progress_item:
-                        mTitle.setText("Progress");
-                        ProgressFragment pf = ProgressFragment.newInstance();
-                        ft.replace(R.id.frame, pf);
-                        ft.addToBackStack(null);
-                        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-                        ft.commit();
-                        break;
+                case R.id.progress_item:
+                    mTitle.setText("Progress");
+                    ProgressFragment pf = ProgressFragment.newInstance();
+                    ft.replace(R.id.frame, pf);
+                    ft.addToBackStack(null);
+                    ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                    ft.commit();
+                    break;
 
-                    case R.id.profile_item:
-                        mTitle.setText("Profile");
-                        ProfileFragment lf = ProfileFragment.newInstance();
-                        ft.replace(R.id.frame, lf);
-                        ft.addToBackStack(null);
-                        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-                        ft.commit();
-                        break;
+                case R.id.profile_item:
+                    mTitle.setText("Profile");
+                    ProfileFragment lf = ProfileFragment.newInstance();
+                    ft.replace(R.id.frame, lf);
+                    ft.addToBackStack(null);
+                    ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                    ft.commit();
+                    break;
 
-                }
-                return true;
             }
+            return true;
         });
     }
 
-    private void setDefaultScreen(){
+    private void setDefaultScreen() {
+
+        // TODO fix this
+        mViewModel.setCurrentPosition(R.id.home_item);
         ft = getSupportFragmentManager().beginTransaction();
         HomeFragment hf = HomeFragment.newInstance();
         ft.replace(R.id.frame, hf);
