@@ -1,12 +1,16 @@
 package io.tstud.paperweight.Browse;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import io.tstud.paperweight.Model.Models.Collection;
+import java.util.List;
+
+import io.tstud.paperweight.Model.Models.Item;
 import io.tstud.paperweight.Model.Repository;
 
 /**
@@ -14,12 +18,13 @@ import io.tstud.paperweight.Model.Repository;
  */
 public class BrowseViewModel extends ViewModel {
 
-    private LiveData<Collection> searchResults;
+    private LiveData<List<Item>> searchResults;
     private MutableLiveData<String> query = new MutableLiveData<>();
     private Repository repository;
 
     public BrowseViewModel() {
         repository = Repository.getInstance();
+        setSearchQuery("");
         setupSearchLD();
     }
 
@@ -27,9 +32,11 @@ public class BrowseViewModel extends ViewModel {
         searchResults = Transformations.switchMap(query, search -> {
 
             if (search == null || search.trim().length() == 0) {
-                // create empty livedata if there is no search term
-                return new MutableLiveData<>();
+                // return recent searches as placeholder
+                Log.d("browse viewmodel", "recent serach action triggered");
+                return repository.getLastFiveRecentSearches();
             } else {
+                Log.d("browse viewmodel", "received search items");
                 return repository.getSearchVolumes(search);
             }
         });
@@ -39,7 +46,7 @@ public class BrowseViewModel extends ViewModel {
         this.query.postValue(query);
     }
 
-    public LiveData<Collection> getSearchResults() {
+    public LiveData<List<Item>> getSearchResults() {
         return searchResults;
     }
 

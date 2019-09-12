@@ -18,7 +18,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.palette.graphics.Palette;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -67,7 +66,7 @@ public class BookDetailActivity extends AppCompatActivity {
         Glide.with(this)
                 .asBitmap()
                 .load(item)
-                .transforms(new CenterCrop(), new RoundedCorners(50))
+                .transform( new RoundedCorners(50))
                 .placeholder(new ColorDrawable(ContextCompat.getColor(this, R.color.dirty_white)))
                 .into(new CustomTarget<Bitmap>() {
                     @Override

@@ -10,7 +10,7 @@
         android:id="@+id/carouselImageContainer"
         android:layout_width="60dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1:1.5"
+        app:layout_constraintDimensionRatio="1:1.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -18,8 +18,6 @@
             android:id="@+id/listCover"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/lotr"
             android:transitionName="bookCover"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

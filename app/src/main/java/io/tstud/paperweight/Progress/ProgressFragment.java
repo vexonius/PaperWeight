@@ -71,13 +71,17 @@ public class ProgressFragment extends Fragment implements CurrentlyReadingClickL
         recyclerView.setAdapter(adapter);
 
 
-        viewModel.getData().observe(getActivity(), collection -> {
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.getData().observe(getViewLifecycleOwner(), collection -> {
             if (collection != null)
                 adapter.updateData(collection);
         });
 
-
-        return v;
     }
 
     @Override

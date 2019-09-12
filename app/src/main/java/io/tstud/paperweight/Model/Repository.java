@@ -10,17 +10,20 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.tstud.paperweight.Model.Dao.BookDao;
 import io.tstud.paperweight.Model.Dao.CurrentlyReadingDao;
+import io.tstud.paperweight.Model.Dao.RecentlySearchedDao;
 import io.tstud.paperweight.Model.Local.Database;
 import io.tstud.paperweight.Model.Models.BookWithStats;
 import io.tstud.paperweight.Model.Models.Collection;
 import io.tstud.paperweight.Model.Models.CurrentlyReadingStats;
 import io.tstud.paperweight.Model.Models.Item;
+import io.tstud.paperweight.Model.Models.RecentlySearchedBook;
 import io.tstud.paperweight.Model.Network.GoogleBooksService;
 import io.tstud.paperweight.Model.Network.RetrofitClient;
 import retrofit2.Call;
@@ -39,10 +42,12 @@ public class Repository {
     private Database db;
     private BookDao bookDao;
     private CurrentlyReadingDao currentlyReadingDao;
+    private RecentlySearchedDao recentlySearchedDao;
 
     private MutableLiveData<Item> bookItem = new MutableLiveData<>();
+    private MutableLiveData<List<Item>> recentSearches = new MutableLiveData<>();
     private MutableLiveData<Collection> collectionTrending = new MutableLiveData<>();
-    private MutableLiveData<Collection> searchedVolumes = new MutableLiveData<>();
+    private MutableLiveData<List<Item>> searchedVolumes = new MutableLiveData<>();
     private MutableLiveData<List<BookWithStats>> booksWithStats = new MutableLiveData<>();
 
     private CompositeDisposable disposables = new CompositeDisposable();
@@ -55,7 +60,7 @@ public class Repository {
         db = Database.getInstance();
         bookDao = db.bookDao();
         currentlyReadingDao = db.currentlyReadingDao();
-        currentlyReadingDao = db.currentlyReadingDao();
+        recentlySearchedDao = db.recentlySearchedDao();
     }
 
     public static synchronized Repository getInstance() {
@@ -111,12 +116,12 @@ public class Repository {
         return collectionTrending;
     }
 
-    public MutableLiveData<Collection> getSearchVolumes(String query) {
+    public MutableLiveData<List<Item>> getSearchVolumes(String query) {
 
         apiService.getVolumes(query, "relevance").enqueue(new Callback<Collection>() {
             @Override
             public void onResponse(Call<Collection> call, Response<Collection> response) {
-                searchedVolumes.postValue(response.body());
+                searchedVolumes.postValue(response.body().getItems());
                 Log.d("repo", "fetched new search results");
             }
 
@@ -129,18 +134,33 @@ public class Repository {
         return searchedVolumes;
     }
 
-    @SuppressLint("CheckResult")
-    public void saveBookToLocal(Item item) {
-        bookDao.saveBook(item)
+    public MutableLiveData<List<Item>> getLastFiveRecentSearches() {
+
+        recentlySearchedDao.lastFiveRecentSearches()
+                .flatMap(recentlySearchedBooks -> {
+                    return Observable.fromIterable(recentlySearchedBooks)
+                            .map(recentlySearchedBook -> {
+                                return recentlySearchedBook.getItem();
+                            })
+                            .toList()
+                            .toObservable();
+
+                })
+                .doOnNext(items -> recentSearches.postValue(items))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> {
-                            Log.d("Book inserted", item.getId());
-                        },
-                        throwable -> {
-                            Log.e("Error", throwable.getMessage());
-                        });
-        Log.d("BOOK SAVED TO DB:", item.getId());
+                .doOnError(throwable -> Log.e("repo", throwable.getMessage()))
+                .subscribe();
+
+        return recentSearches;
+    }
+
+    @SuppressLint("CheckResult")
+    public void saveBookToLocal(Item item) {
+        Single.concat(bookDao.saveBook(item), recentlySearchedDao.createNewRecentSearch(new RecentlySearchedBook().createItem(item)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aLong -> Log.d("book inserted", String.valueOf(item.getVolumeInfo().getId())));
     }
 
     public void saveBookToCurrentlyReading(String bookId) {

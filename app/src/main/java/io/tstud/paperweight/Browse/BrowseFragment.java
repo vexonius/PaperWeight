@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,10 +83,10 @@ public class BrowseFragment extends Fragment implements BookClickListener {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        if(searchbar.getText() != null && searchbar.getText().length() > 1)
                             viewModel.setSearchQuery(searchbar.getText().toString());
                     }
                 }, 400);
+                Log.d("BROWSE FRAG", "search begun");
 
 
             }
@@ -98,7 +99,7 @@ public class BrowseFragment extends Fragment implements BookClickListener {
 
         viewModel.getSearchResults().observe(getViewLifecycleOwner(), collection -> {
             if(collection!=null)
-                listAdapter.updateData(collection.getItems());
+                listAdapter.updateData(collection);
         });
 
         return v;

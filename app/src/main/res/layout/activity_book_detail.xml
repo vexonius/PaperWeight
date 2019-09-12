@@ -26,7 +26,7 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintDimensionRatio="1:1.5"
+                app:layout_constraintDimensionRatio="1:1.6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -34,8 +34,6 @@
                     android:id="@+id/detailCover"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/lotr"
                     android:transitionName="bookCover"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +47,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Fantasy"
                 android:textSize="8dp"
                 app:chipBackgroundColor="#ffffff"
                 app:chipStrokeColor="@color/colorAccent"

@@ -9,10 +9,12 @@ import androidx.room.TypeConverters;
 
 import io.tstud.paperweight.Model.Dao.BookDao;
 import io.tstud.paperweight.Model.Dao.CurrentlyReadingDao;
+import io.tstud.paperweight.Model.Dao.RecentlySearchedDao;
 import io.tstud.paperweight.Model.Models.CurrentlyReadingStats;
 import io.tstud.paperweight.Model.Models.Item;
+import io.tstud.paperweight.Model.Models.RecentlySearchedBook;
 
-@androidx.room.Database(entities = {Item.class, CurrentlyReadingStats.class}, version = 1, exportSchema = false)
+@androidx.room.Database(entities = {Item.class, CurrentlyReadingStats.class, RecentlySearchedBook.class}, version = 1, exportSchema = false)
 @TypeConverters(CustomTypeConverters.class)
 public abstract class Database extends RoomDatabase {
     private volatile static Database instance;
@@ -20,6 +22,7 @@ public abstract class Database extends RoomDatabase {
 
     public abstract BookDao bookDao();
     public abstract CurrentlyReadingDao currentlyReadingDao();
+    public abstract RecentlySearchedDao recentlySearchedDao();
 
     public static void setInstance(final Context context){
         if(instance == null){

@@ -10,7 +10,7 @@
         android:id="@+id/carouselImageContainer"
         android:layout_width="90dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1:1.5"
+        app:layout_constraintDimensionRatio="1:1.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
