@@ -59,13 +59,13 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
         if (volume.getVolumeInfo().getImageLinks() != null) {
             Glide.with(holder.itemView.getContext())
                     .load(volume.getVolumeInfo().getImageLinks().getSmallThumbnailWithoutCurledEdge())
-                    .transforms(new CenterCrop(), new RoundedCorners(50))
+                    .transform(new CenterCrop(), new RoundedCorners(50))
                     .placeholder(new ColorDrawable(ContextCompat.getColor(holder.itemView.getContext(), R.color.dirty_white)))
                     .into(cover);
         } else {
             Glide.with(holder.itemView.getContext())
                     .load(new ColorDrawable(ContextCompat.getColor(holder.itemView.getContext(), R.color.dirty_white)))
-                    .transforms(new CenterCrop(), new RoundedCorners(50))
+                    .transform(new CenterCrop(), new RoundedCorners(50))
                     .into(cover);
         }
 

@@ -93,7 +93,7 @@ public class CurrentlyReadingAdapter extends RecyclerView.Adapter<CurrentlyReadi
         } else {
             Glide.with(holder.itemView.getContext())
                     .load(new ColorDrawable(ContextCompat.getColor(holder.itemView.getContext(), R.color.dirty_white)))
-                    .transforms(new CenterCrop(), new RoundedCorners(30))
+                    .transform(new CenterCrop(), new RoundedCorners(30))
                     .into(holder.cover);
         }
     }

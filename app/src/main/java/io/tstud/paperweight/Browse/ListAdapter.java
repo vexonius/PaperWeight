@@ -74,13 +74,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CarouselViewHo
         if (volume.getVolumeInfo().getImageLinks() != null) {
             Glide.with(holder.itemView.getContext())
                     .load(volume.getVolumeInfo().getImageLinks().getSmallThumbnailWithoutCurledEdge())
-                    .transforms(new CenterCrop(), new RoundedCorners(30))
+                    .transform(new CenterCrop(), new RoundedCorners(30))
                     .placeholder(new ColorDrawable(ContextCompat.getColor(holder.itemView.getContext(), R.color.dirty_white)))
                     .into(holder.cover);
         } else {
             Glide.with(holder.itemView.getContext())
                     .load(new ColorDrawable(ContextCompat.getColor(holder.itemView.getContext(), R.color.dirty_white)))
-                    .transforms(new CenterCrop(), new RoundedCorners(30))
+                    .transform(new CenterCrop(), new RoundedCorners(30))
                     .into(holder.cover);
         }
 

@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
         Glide.with(this)
                 .load("https://images.unsplash.com/photo-1456953180671-730de08edaa7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80")
                 .transition(withCrossFade(factory))
-                .transforms(new CenterCrop(), new RoundedCorners(50))
+                .transform(new CenterCrop(), new RoundedCorners(50))
                 .placeholder(new ColorDrawable(ContextCompat.getColor(getActivity(), R.color.dirty_white)))
                 .into(banner);
 

@@ -34,9 +34,7 @@ public class BottomSheet extends BottomSheetDialogFragment {
 
         mViewModel = ViewModelProviders.of(getActivity()).get(ProgressViewModel.class);
 
-        mViewModel.getBookToUpdate().observe(getActivity(), bookWithStats -> {
-            progressCurrent = bookWithStats.getStats().getReadProgress();
-        });
+        mViewModel.getBookToUpdate().observe(getActivity(), bookWithStats -> progressCurrent = bookWithStats.getStats().getReadProgress());
     }
 
     @Override
@@ -53,7 +51,7 @@ public class BottomSheet extends BottomSheetDialogFragment {
         croller.setOnCrollerChangeListener(new OnCrollerChangeListener() {
             @Override
             public void onProgressChanged(Croller croller, int progress) {
-                progressText.setText(String.valueOf(progress) + "%");
+                progressText.setText(progress + "%");
                 progressToUpdate = progress;
             }
 

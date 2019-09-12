@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -137,19 +138,15 @@ public class Repository {
     public MutableLiveData<List<Item>> getLastFiveRecentSearches() {
 
         recentlySearchedDao.lastFiveRecentSearches()
-                .flatMap(recentlySearchedBooks -> {
-                    return Observable.fromIterable(recentlySearchedBooks)
-                            .map(recentlySearchedBook -> {
-                                return recentlySearchedBook.getItem();
-                            })
-                            .toList()
-                            .toObservable();
-
-                })
+                .flatMap(recentlySearchedBooks -> Observable.fromIterable(recentlySearchedBooks)
+                        .map(RecentlySearchedBook::getItem)
+                        .toList()
+                        .toObservable())
                 .doOnNext(items -> recentSearches.postValue(items))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(throwable -> Log.e("repo", throwable.getMessage()))
+                .doOnError(throwable -> Log.e("repo", Objects.requireNonNull(throwable.getMessage())))
+                .doOnSubscribe(disposable -> disposables.add(disposable))
                 .subscribe();
 
         return recentSearches;
@@ -160,7 +157,8 @@ public class Repository {
         Single.concat(bookDao.saveBook(item), recentlySearchedDao.createNewRecentSearch(new RecentlySearchedBook().createItem(item)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> Log.d("book inserted", String.valueOf(item.getVolumeInfo().getId())));
+                .subscribe(aLong -> Log.d("book inserted", String.valueOf(item.getVolumeInfo().getId())),
+                        throwable -> Log.e("Saving error", throwable.getMessage()));
     }
 
     public void saveBookToCurrentlyReading(String bookId) {
@@ -179,12 +177,9 @@ public class Repository {
 
     public void deleteCurrentlyReadingStats(CurrentlyReadingStats stats) {
         deleteDisposable = Observable.timer(3, TimeUnit.SECONDS)
-                .flatMap(aLong -> {
-                    return
-                            currentlyReadingDao.deleteCurrentlyReadingStats(stats)
-                                    .doOnSuccess(id -> Log.d("DELETED", String.valueOf(id)))
-                                    .doOnError(throwable -> Log.e("Repo", throwable.getMessage())).toObservable();
-                }).subscribeOn(Schedulers.io())
+                .flatMap(aLong -> currentlyReadingDao.deleteCurrentlyReadingStats(stats)
+                        .doOnSuccess(id -> Log.d("DELETED", String.valueOf(id)))
+                        .doOnError(throwable -> Log.e("Repo", throwable.getMessage())).toObservable()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> disposables.add(disposable))
                 .subscribe();
@@ -193,12 +188,9 @@ public class Repository {
     public void markAsRead(CurrentlyReadingStats stats) {
         stats.setReadStatus(CurrentlyReadingStats.READ);
         readDisposable = Observable.timer(3, TimeUnit.SECONDS)
-                .flatMap(aLong -> {
-                    return
-                            currentlyReadingDao.markAsRead(stats)
-                                    .doOnSuccess(id -> Log.d("MARKED READ", String.valueOf(id)))
-                                    .doOnError(throwable -> Log.e("Repo", throwable.getMessage())).toObservable();
-                }).subscribeOn(Schedulers.io())
+                .flatMap(aLong -> currentlyReadingDao.markAsRead(stats)
+                        .doOnSuccess(id -> Log.d("MARKED READ", String.valueOf(id)))
+                        .doOnError(throwable -> Log.e("Repo", throwable.getMessage())).toObservable()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> disposables.add(disposable))
                 .subscribe();
