@@ -12,14 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.chip.ChipGroup;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,10 +37,10 @@ public class BrowseFragment extends Fragment implements BookClickListener {
     private BrowseViewModel viewModel;
     private RecyclerView recyclerResults;
     private ListAdapter listAdapter;
-    private ChipGroup chipScrollView;
     private Timer timer;
+    private TextView header;
 
-    public static BrowseFragment newInstance(){
+    public static BrowseFragment newInstance() {
         return new BrowseFragment();
     }
 
@@ -59,13 +58,22 @@ public class BrowseFragment extends Fragment implements BookClickListener {
 
         searchbar = (EditText) v.findViewById(R.id.searchbar);
         recyclerResults = (RecyclerView) v.findViewById(R.id.categoriesRecycler);
-        chipScrollView = (ChipGroup) v.findViewById(R.id.chips);
+        header = (TextView) v.findViewById(R.id.categoriesHeader);
 
         viewModel = ViewModelProviders.of(getActivity()).get(BrowseViewModel.class);
 
+        searchbar.setOnFocusChangeListener((view, b) -> {
+            if (view.hasFocus()) {
+                header.setVisibility(View.GONE);
+            } else {
+                header.setVisibility(View.VISIBLE);
+            }
+        });
+
         searchbar.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -76,14 +84,13 @@ public class BrowseFragment extends Fragment implements BookClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                chipScrollView.setVisibility(View.GONE);
 
                 // delay api calls for some time
                 timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                            viewModel.setSearchQuery(searchbar.getText().toString());
+                        viewModel.setSearchQuery(searchbar.getText().toString());
                     }
                 }, 400);
                 Log.d("BROWSE FRAG", "search begun");
@@ -98,7 +105,7 @@ public class BrowseFragment extends Fragment implements BookClickListener {
 
 
         viewModel.getSearchResults().observe(getViewLifecycleOwner(), collection -> {
-            if(collection!=null)
+            if (collection != null)
                 listAdapter.updateData(collection);
         });
 
@@ -113,7 +120,7 @@ public class BrowseFragment extends Fragment implements BookClickListener {
         intent.putExtra("title", item.getVolumeInfo().getTitle());
         intent.putExtra("author", item.getVolumeInfo().getAuthors().get(0));
         ActivityOptionsCompat options = ActivityOptionsCompat.
-                makeSceneTransitionAnimation(getActivity(), (View)view, "bookCover");
+                makeSceneTransitionAnimation(getActivity(), (View) view, "bookCover");
         startActivity(intent, options.toBundle());
     }
 }

@@ -7,14 +7,15 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 import io.tstud.paperweight.Model.Dao.BookDao;
 import io.tstud.paperweight.Model.Dao.CurrentlyReadingDao;
@@ -27,9 +28,6 @@ import io.tstud.paperweight.Model.Models.Item;
 import io.tstud.paperweight.Model.Models.RecentlySearchedBook;
 import io.tstud.paperweight.Model.Network.GoogleBooksService;
 import io.tstud.paperweight.Model.Network.RetrofitClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 
 
@@ -56,12 +54,20 @@ public class Repository {
 
 
     private Repository() {
+        setErrorHandler();
         apiClient = RetrofitClient.getInstance();
         apiService = apiClient.create(GoogleBooksService.class);
         db = Database.getInstance();
         bookDao = db.bookDao();
         currentlyReadingDao = db.currentlyReadingDao();
         recentlySearchedDao = db.recentlySearchedDao();
+    }
+
+    private void setErrorHandler() {
+        RxJavaPlugins.setErrorHandler(throwable -> {
+            Log.e("APP REPO ERROR", "");
+            throwable.printStackTrace();
+        });
     }
 
     public static synchronized Repository getInstance() {
@@ -78,6 +84,7 @@ public class Repository {
                 .firstElement()
                 .doOnSuccess(item -> bookItem.setValue(item))
                 .doOnSubscribe(disposable -> disposables.add(disposable))
+                .doOnError(throwable -> Log.e("Error while fetching", throwable.getMessage()))
                 .subscribe();
 
         return bookItem;
@@ -99,38 +106,23 @@ public class Repository {
     }
 
 
-    public MutableLiveData<Collection> getTrendingList() {
+    public Maybe<Collection> getTrendingList() {
 
-        apiService.getVolumes("sapkowski", "relevance").enqueue(new Callback<Collection>() {
-            @Override
-            public void onResponse(Call<Collection> call, Response<Collection> response) {
-                collectionTrending.postValue(response.body());
-                Log.d("repo", "fetched new content");
-            }
+       return apiService.getVolumes("the wheel of time", "relevance");
 
-            @Override
-            public void onFailure(Call<Collection> call, Throwable t) {
-                Log.e("Error", t.getMessage());
-            }
-        });
-
-        return collectionTrending;
     }
 
     public MutableLiveData<List<Item>> getSearchVolumes(String query) {
 
-        apiService.getVolumes(query, "relevance").enqueue(new Callback<Collection>() {
-            @Override
-            public void onResponse(Call<Collection> call, Response<Collection> response) {
-                searchedVolumes.postValue(response.body().getItems());
-                Log.d("repo", "fetched new search results");
-            }
-
-            @Override
-            public void onFailure(Call<Collection> call, Throwable t) {
-                Log.e("Error", t.getMessage());
-            }
-        });
+        apiService.getVolumes(query, "relevance")
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(disposable -> disposables.add(disposable))
+                .doOnError(throwable -> Log.e("repo", throwable.toString()))
+                .doOnSuccess(collection -> {
+                    searchedVolumes.postValue(collection.getItems());
+                    Log.d("repo", "fetched new search results");
+                })
+                .subscribe();
 
         return searchedVolumes;
     }
@@ -145,7 +137,7 @@ public class Repository {
                 .doOnNext(items -> recentSearches.postValue(items))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(throwable -> Log.e("repo", Objects.requireNonNull(throwable.getMessage())))
+                .doOnError(throwable -> Log.e("repo", throwable.getMessage()))
                 .doOnSubscribe(disposable -> disposables.add(disposable))
                 .subscribe();
 
@@ -162,12 +154,16 @@ public class Repository {
     }
 
     public void saveBookToCurrentlyReading(String bookId) {
-        CurrentlyReadingStats stats = new CurrentlyReadingStats();
-        stats.setStatsId(bookId);
-        stats.setReadStatus(CurrentlyReadingStats.READING);
-        stats.setStartedReading(new Date());
-        stats.setLastUpdated(new Date());
-        currentlyReadingDao.createNewReadingStats(stats)
+
+        Single.just(bookId)
+                .flatMap(s -> {
+                    CurrentlyReadingStats stats = new CurrentlyReadingStats();
+                    stats.setStatsId(bookId);
+                    stats.setReadStatus(CurrentlyReadingStats.READING);
+                    stats.setStartedReading(new Date());
+                    stats.setLastUpdated(new Date());
+                    return currentlyReadingDao.createNewReadingStats(stats);
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> disposables.add(disposable))
@@ -189,7 +185,7 @@ public class Repository {
         stats.setReadStatus(CurrentlyReadingStats.READ);
         readDisposable = Observable.timer(3, TimeUnit.SECONDS)
                 .flatMap(aLong -> currentlyReadingDao.markAsRead(stats)
-                        .doOnSuccess(id -> Log.d("MARKED READ", String.valueOf(id)))
+                        .doOnSuccess(id -> Log.d("MARKED READ", stats.getStatsId()))
                         .doOnError(throwable -> Log.e("Repo", throwable.getMessage())).toObservable()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> disposables.add(disposable))
@@ -199,6 +195,7 @@ public class Repository {
     public void updateBookProgress(CurrentlyReadingStats stats, int progress) {
         stats.setLastUpdated(new Date());
         stats.setReadProgress(progress);
+        // TODO: write a method for calculating page progress from reading progress
 
         currentlyReadingDao.createNewReadingStats(stats)
                 .subscribeOn(Schedulers.io())

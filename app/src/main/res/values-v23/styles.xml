@@ -8,12 +8,22 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:navigationBarColor">@color/dirty_white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:navigationBarColor">?colorSurface</item>
 
+    </style>
+
+    <style name="GreenChip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipStrokeColor">@color/colorAccent</item>
+        <item name="rippleColor">@color/colorAccent</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="chipBackgroundColor">@android:color/transparent</item>
+        <item name="android:textColor">?colorControlNormal</item>
     </style>
 
     <style name="LightChip" parent="Widget.MaterialComponents.Chip.Action">
         <item name="chipStrokeColor">@color/dirty_white</item>
+        <item name="rippleColor">@color/dirty_white</item>
         <item name="chipStrokeWidth">2dp</item>
         <item name="chipBackgroundColor">@android:color/transparent</item>
         <item name="android:textColor">?colorControlNormal</item>

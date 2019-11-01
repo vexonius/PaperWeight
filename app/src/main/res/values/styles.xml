@@ -9,10 +9,20 @@
 
     </style>
 
-    <style name="HeaderText" parent="TextAppearance.MaterialComponents.Body1" />
+    <style name="HeaderText" >
+        <item name="android:textColor">?colorOnBackground</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
-
-
+    <style name="ListItemText">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textColor">?colorOnBackground</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 
 </resources>

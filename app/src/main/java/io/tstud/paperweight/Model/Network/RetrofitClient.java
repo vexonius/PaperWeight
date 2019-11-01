@@ -1,5 +1,8 @@
 package io.tstud.paperweight.Model.Network;
 
+import io.reactivex.schedulers.Schedulers;
+import io.tstud.paperweight.Utils.NoNetworkInterceptor;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,10 +19,19 @@ public class RetrofitClient {
     public static Retrofit getInstance(){
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(provideClient())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.
+                        createWithScheduler(Schedulers.io()))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         return retrofit;
+    }
+
+    public static OkHttpClient provideClient(){
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        return builder.addInterceptor(new NoNetworkInterceptor())
+                .build();
     }
 }

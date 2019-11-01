@@ -30,16 +30,10 @@
         android:id="@+id/listTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:maxLines="2"
-        android:textColor="?colorOnBackground"
-        android:textSize="18dp"
-        android:textStyle="bold"
+        style="@style/ListItemText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/carouselImageContainer"
-        app:layout_constraintTop_toTopOf="@+id/carouselImageContainer"
-        tools:text="Storm of Swords" />
+        app:layout_constraintTop_toTopOf="@+id/carouselImageContainer" />
 
     <TextView
         android:id="@+id/listAuthor"

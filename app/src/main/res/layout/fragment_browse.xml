@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".Browse.BrowseFragment">
 
     <EditText
@@ -22,36 +23,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chips"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:paddingStart="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchbar">
-
-        <com.google.android.material.chip.Chip
-            style="@style/LightChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Game of Thrones" />
-
-        <com.google.android.material.chip.Chip
-            style="@style/LightChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kingkiller" />
-
-        <com.google.android.material.chip.Chip
-            style="@style/LightChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="The Way of Kings" />
-    </com.google.android.material.chip.ChipGroup>
 
     <TextView
         android:id="@+id/categoriesHeader"
@@ -59,24 +30,25 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Recently viewed"
+        android:text="@string/recently_viewed"
         android:textColor="@color/item_color"
         android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chips" />
+        app:layout_constraintTop_toBottomOf="@+id/searchbar" />
 
     <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/list_item"
         android:id="@+id/categoriesRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:minHeight="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoriesHeader"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/categoriesHeader"
+        tools:listitem="@layout/list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

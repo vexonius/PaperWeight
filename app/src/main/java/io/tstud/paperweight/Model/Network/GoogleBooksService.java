@@ -1,5 +1,6 @@
 package io.tstud.paperweight.Model.Network;
 
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.tstud.paperweight.Model.Models.Collection;
 import io.tstud.paperweight.Model.Models.Item;
@@ -21,7 +22,7 @@ public interface GoogleBooksService {
 
     @Headers({"Content-Type: application/json;charset=utf-8", "Accept: application/json"})
     @GET("/books/v1/volumes")
-    Call<Collection> getVolumes(@Query("q") String query, @Query("orderBy") String order);
+    Maybe<Collection> getVolumes(@Query("q") String query, @Query("orderBy") String order);
 
     @Headers({"Content-Type: application/json;charset=utf-8", "Accept: application/json"})
     @GET("/books/v1/volumes")

@@ -93,6 +93,8 @@ public class BookDetailActivity extends AppCompatActivity {
             genre.setText(bookitem.getVolumeInfo().getCategories().get(0));
         });
 
+
+
         setFAB();
         extendDescriptionListener();
 
