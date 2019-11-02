@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.idlestar.ratingstar.RatingStarView;
 
 import java.util.List;
 
@@ -34,9 +35,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CarouselViewHo
     }
 
 
-    public class CarouselViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
+    public class CarouselViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView title, author;
         private ImageView cover;
+        private RatingStarView stars;
         BookClickListener bookClickListener;
 
         public CarouselViewHolder(@NonNull View itemView, BookClickListener bookClickListener) {
@@ -45,6 +47,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CarouselViewHo
             title = (TextView) itemView.findViewById(R.id.listTitle);
             author = (TextView) itemView.findViewById(R.id.listAuthor);
             cover = (ImageView) itemView.findViewById(R.id.listCover);
+            stars = (RatingStarView) itemView.findViewById(R.id.stars);
             this.bookClickListener = bookClickListener;
 
             itemView.setOnClickListener(this);
@@ -66,10 +69,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CarouselViewHo
     @Override
     public void onBindViewHolder(@NonNull CarouselViewHolder holder, int position) {
         Item volume = volumes.get(position);
+        float rating = volume.getVolumeInfo().getAverageRating().floatValue();
+
         if (volume.getVolumeInfo().getTitle() != null)
             holder.title.setText(volume.getVolumeInfo().getTitle());
         if (volume.getVolumeInfo().getAuthors() != null)
             holder.author.setText(volume.getVolumeInfo().getAuthors().get(0));
+
+        holder.stars.setRating((int)rating);
 
         if (volume.getVolumeInfo().getImageLinks() != null) {
             Glide.with(holder.itemView.getContext())

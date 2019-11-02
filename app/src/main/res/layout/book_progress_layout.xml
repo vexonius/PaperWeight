@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="?colorSurface">
 
     <TextView
         android:id="@+id/progressPercent"
@@ -12,14 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
-        android:text="20"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/croller"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.sdsmdg.harjot.crollerTest.Croller
         android:id="@+id/croller"
@@ -28,7 +25,7 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
-        app:back_circle_color="#EDEDED"
+        app:back_circle_color="?colorControlHighlight"
         app:indicator_color="@color/colorAccent"
         app:indicator_width="10"
         app:is_continuous="true"
@@ -38,11 +35,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:main_circle_color="@color/white"
-        app:min="0"
+        app:main_circle_color="?colorSurface"
         app:max="100"
+        app:min="0"
         app:progress_primary_color="@color/colorAccent"
-        app:progress_secondary_color="@color/selected"
+        app:progress_secondary_color="@color/dirty_white"
         app:start_offset="45" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

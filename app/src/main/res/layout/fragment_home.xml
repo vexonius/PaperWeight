@@ -52,27 +52,21 @@
 
             <TextView
                 android:id="@+id/trend"
+                style="@style/HeaderText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/trending"
-                android:textColor="?colorOnBackground"
-                android:textSize="16dp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
             <TextView
                 android:id="@+id/trendMore"
+                style="@style/ShowMoreText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:text="@string/more"
-                android:textAllCaps="true"
-                android:textColor="@color/colorAccent"
-                android:textSize="14dp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/trend"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/trend" />
@@ -90,27 +84,21 @@
 
             <TextView
                 android:id="@+id/recommend"
+                style="@style/HeaderText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/recommended"
-                android:textColor="?colorOnBackground"
-                android:textSize="16dp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/trend_recycler" />
 
             <TextView
                 android:id="@+id/recommendMore"
+                style="@style/ShowMoreText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:text="@string/more"
-                android:textAllCaps="true"
-                android:textColor="@color/colorAccent"
-                android:textSize="14dp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/recommend"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/recommend" />

@@ -36,4 +36,8 @@ public interface GoogleBooksService {
     @GET("/books/v1/volumes/{volumeId}")
     Single<Item> getSingleVolumeById(@Path("volumeId") String volumeId);
 
+    @Headers({"Content-Type: application/json;charset=utf-8", "Accept: application/json"})
+    @GET("/books/v1/users/109488544162266416749/bookshelves/1001/volumes")
+    Maybe<Collection> getToReadList();
+
 }

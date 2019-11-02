@@ -7,15 +7,10 @@
 
     <TextView
         android:id="@+id/dash_title"
+        style="@style/ToolBarTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Dashboard"
-        android:textColor="?colorOnBackground"
-        android:textSize="24dp"
-        android:textStyle="bold"
+        android:text="@string/dashboard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

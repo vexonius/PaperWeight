@@ -108,7 +108,7 @@ public class Repository {
 
     public Maybe<Collection> getTrendingList() {
 
-       return apiService.getVolumes("the wheel of time", "relevance");
+       return apiService.getToReadList();
 
     }
 

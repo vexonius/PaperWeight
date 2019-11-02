@@ -22,7 +22,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+            app:layout_constraintTop_toTopOf="parent">
+        </ImageView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -37,15 +38,36 @@
 
     <TextView
         android:id="@+id/listAuthor"
+        style="@style/ListItemSubtext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="2dp"
-        android:singleLine="true"
-        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/carouselImageContainer"
         app:layout_constraintTop_toBottomOf="@+id/listTitle"
         tools:text="George R. R. Martin" />
+
+    <com.idlestar.ratingstar.RatingStarView
+        android:id="@+id/stars"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="?colorSurface"
+        app:layout_constraintStart_toEndOf="@+id/carouselImageContainer"
+        app:layout_constraintTop_toBottomOf="@+id/listAuthor"
+        app:rsv_cornerRadius="4dp"
+        app:rsv_drawStrokeForEmptyStar="false"
+        app:rsv_drawStrokeForHalfStar="true"
+        app:rsv_enableSelectRating="false"
+        app:rsv_onlyHalfStar="false"
+        app:rsv_rating="0"
+        app:rsv_starBackgroundColor="@color/dirty_white"
+        app:rsv_starForegroundColor="@color/yellowstar"
+        app:rsv_starMargin="4dp"
+        app:rsv_starNum="5"
+        app:rsv_starThickness="0.6"
+        app:rsv_strokeWidth="0px" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

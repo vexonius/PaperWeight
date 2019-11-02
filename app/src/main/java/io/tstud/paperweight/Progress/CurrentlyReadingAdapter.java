@@ -87,8 +87,8 @@ public class CurrentlyReadingAdapter extends RecyclerView.Adapter<CurrentlyReadi
         if (bookAndStats.getItem().getVolumeInfo().getImageLinks() != null) {
             Glide.with(holder.itemView.getContext())
                     .load(bookAndStats.getItem().getVolumeInfo().getImageLinks().getSmallThumbnailWithoutCurledEdge())
-                    .transform(new RoundedCorners(30))
                     .placeholder(new ColorDrawable(ContextCompat.getColor(holder.itemView.getContext(), R.color.dirty_white)))
+                    .transform(new RoundedCorners(30))
                     .into(holder.cover);
         } else {
             Glide.with(holder.itemView.getContext())
