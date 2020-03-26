@@ -1,5 +1,7 @@
 package io.tstud.paperweight.BookDetail;
 
+//komentar dodan
+
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
