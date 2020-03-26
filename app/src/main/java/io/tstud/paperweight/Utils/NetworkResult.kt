@@ -7,4 +7,5 @@ sealed class NetworkResult {
         print("prazna metoda")
     }
 
+  // još jedan komentar
 }
